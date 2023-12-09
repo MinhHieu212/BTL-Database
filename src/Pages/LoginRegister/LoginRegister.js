@@ -40,7 +40,13 @@ const LoginRegister = () => {
 
     sessionStorage.setItem("name", userInfo.name);
 
-    navigate("/product");
+    if (sessionStorage.getItem("name") === "admin") {
+      navigate("/adminProduct");
+    } else if (sessionStorage.getItem("name") === "store") {
+      navigate("/storeProduct");
+    } else {
+      navigate("/product");
+    }
   };
 
   return (

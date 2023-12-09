@@ -24,7 +24,7 @@ const CustomerHeader = () => {
   return (
     <div
       className={`w-[100vw] h-[60px] bg-slate-600 items-center justify-center gap-3 px-2 md:px-10 
-      ${sessionStorage.getItem("name") ? "flex" : "hidden"}`}
+      ${sessionStorage.getItem("name") === "customer" ? "flex" : "hidden"}`}
     >
       <nav className="w-[900px] h-full">
         <ul className="flex items-center justify-between w-full h-full font-bold text-[18px] md:text-[24px]">

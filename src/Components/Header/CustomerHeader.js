@@ -22,17 +22,17 @@ const CustomerHeader = () => {
       <nav className="w-[900px] h-full">
         <ul className="flex items-center justify-between w-full h-full font-bold text-[18px] md:text-[24px]">
           <li>
-            <NavLink to="/" activeClassName="active-link" exact>
+            <NavLink to="/" exact>
               <span className="text-white uppercase"> Product</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/cart" activeClassName="active-link">
+            <NavLink to="/cart">
               <span className="text-white uppercase"> Cart</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/orders" activeClassName="active-link">
+            <NavLink to="/orders">
               <span className="text-white uppercase"> Orders</span>
             </NavLink>
           </li>

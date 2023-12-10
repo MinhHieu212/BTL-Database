@@ -22,17 +22,17 @@ const StoreOwnerHeader = () => {
       <nav className="w-[900px] h-full">
         <ul className="flex items-center justify-between w-full h-full font-bold text-[18px] md:text-[24px]">
           <li>
-            <NavLink to="/storeProduct" activeClassName="active-link" exact>
+            <NavLink to="/storeProduct"  exact>
               <span className="text-white uppercase"> Product </span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/storeRevenue" activeClassName="active-link">
+            <NavLink to="/storeRevenue" >
               <span className="text-white uppercase"> Revenue </span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/storeDiscountList" activeClassName="active-link">
+            <NavLink to="/storeDiscountList" >
               <span className="text-white uppercase"> DiscountList </span>
             </NavLink>
           </li>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductList, exampleComments } from "./ProductList";
+import EditCommentModal from "../../Components/Modal/EditCommentModal";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -137,13 +138,18 @@ const ProductDetail = () => {
           {exampleComments.map((item, index) => (
             <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
               <div className="w-full flex item-center gap-4 justify-end">
-                <button
-                  className="bg-slate-500 p-2 rounded-md text-white"
-                  onClick={() => handleEditComment(item?.id_comment)}
+                <EditCommentModal
+                  initComment={item?.detail}
+                  initRating={item?.ratingStar}
+                  id_comment={item?.id_comment}
                 >
-                  Edit
-                </button>
-
+                  <button
+                    className="bg-slate-500 p-2 rounded-md text-white"
+                    onClick={() => handleEditComment(item?.id_comment)}
+                  >
+                    Edit
+                  </button>
+                </EditCommentModal>
                 <button
                   className="bg-slate-500 p-2 rounded-md text-white"
                   onClick={() => handleRemoveComment(item?.id_comment)}

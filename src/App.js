@@ -29,6 +29,7 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="product/:productId" element={<ProductDetail />} />
           <Route path="/Printer-Simulation" element={<LoginRegister />} />
+          <Route path="/BTL-Database" element={<LoginRegister />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/account" element={<Account />} />

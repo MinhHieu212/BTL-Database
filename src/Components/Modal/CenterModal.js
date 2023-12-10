@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { CloseModalIcon } from "../../Assets/Icons/Icons";
-
 const CenterModal = ({
   open = false,
   handleClose = () => {},
@@ -34,10 +32,10 @@ const CenterModal = ({
           {filterIcon}
         </span>
         <span
-          className="absolute right-2 top-2 p-2 md:flex items-center justify-center rounded-full z-10 "
+          className="absolute right-2 top-2 p-2 md:flex items-center text-white cursor-pointer justify-center rounded-full z-10 "
           onClick={handleClose}
         >
-          <CloseModalIcon></CloseModalIcon>
+          Close
         </span>
         {children}
       </div>

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/BTL-Database/static/css/main.70226d53.css",
+    "main.js": "/BTL-Database/static/js/main.a809a97c.js",
+    "index.html": "/BTL-Database/index.html",
+    "main.70226d53.css.map": "/BTL-Database/static/css/main.70226d53.css.map",
+    "main.a809a97c.js.map": "/BTL-Database/static/js/main.a809a97c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.70226d53.css",
+    "static/js/main.a809a97c.js"
+  ]
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductList, exampleComments } from "./ProductList";
 import EditCommentModal from "../../Components/Modal/EditCommentModal";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -16,7 +17,9 @@ const ProductDetail = () => {
   const product = ProductList.find((item) => item.id === parseInt(productId));
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} ${product?.Name} to cart`);
+    console.log(`Added ${quantity} ${product?.name} to cart`);
+
+    toast.success("Add product to cart successfully");
   };
 
   if (!product) {
@@ -42,6 +45,8 @@ const ProductDetail = () => {
   };
   const handleRemoveComment = (id_comment) => {
     console.log("Remove comment : ", id_comment);
+
+    toast.success("Remove comment successfully");
   };
 
   return (

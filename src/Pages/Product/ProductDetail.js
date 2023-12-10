@@ -30,8 +30,17 @@ const ProductDetail = () => {
     console.log("New comment and rating insert", {
       comments: comments,
       rating: rating,
+      id_prodcut: productId,
+      id_buyer: sessionStorage.getItem("id_user") || 1,
     });
     setComments("");
+  };
+
+  const handleEditComment = (id_comment) => {
+    console.log("Edit comment : ", id_comment);
+  };
+  const handleRemoveComment = (id_comment) => {
+    console.log("Remove comment : ", id_comment);
   };
 
   return (
@@ -126,7 +135,22 @@ const ProductDetail = () => {
         </div>
         <div className="w-full flex items-center justify-center gap-3 flex-col">
           {exampleComments.map((item, index) => (
-            <div key={index} className="w-[95%] mx-auto shadow-lg   p-3">
+            <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
+              <div className="w-full flex item-center gap-4 justify-end">
+                <button
+                  className="bg-slate-500 p-2 rounded-md text-white"
+                  onClick={() => handleEditComment(item?.id_comment)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="bg-slate-500 p-2 rounded-md text-white"
+                  onClick={() => handleRemoveComment(item?.id_comment)}
+                >
+                  Remove
+                </button>
+              </div>
               <p>
                 <span className="text-[blue]">Detail: </span> {item?.detail}
               </p>

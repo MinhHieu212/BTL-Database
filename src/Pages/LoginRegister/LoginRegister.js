@@ -39,9 +39,11 @@ const LoginRegister = () => {
     useUserInfoContext?.updateUserInfo(dataLogin);
 
     sessionStorage.setItem("name", userInfo.name);
+    sessionStorage.setItem("password", userInfo.password);
+    // sessionStorage.setItem("id_user", userInfo.id_user);
 
     if (sessionStorage.getItem("name") === "admin") {
-      navigate("/adminProduct");
+      navigate("/adminUserList");
     } else if (sessionStorage.getItem("name") === "store") {
       navigate("/storeProduct");
     } else {

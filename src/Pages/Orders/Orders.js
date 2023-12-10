@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { OrderData } from "./OrdersDataFake";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const Orders = () => {
   const [selectedStatus, setSelectedStatus] = useState("all");
@@ -7,6 +8,8 @@ const Orders = () => {
 
   const handleOrderConfirmation = (id) => {
     console.log("Params for change Order -> Bill : ", id);
+
+    toast.success("Confirm Received & Paid Successfully");
   };
 
   useEffect(() => {

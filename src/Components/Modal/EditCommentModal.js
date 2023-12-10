@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CenterModal from "./CenterModal";
+import { toast } from "../Toastify/Toastify";
 
 const EditCommentModal = ({
   children,
@@ -32,6 +33,8 @@ const EditCommentModal = ({
     setRating(initRating);
     setComment(initComment);
     setOpenModal(false);
+
+    toast.success("Update comment successfully");
   };
 
   return (

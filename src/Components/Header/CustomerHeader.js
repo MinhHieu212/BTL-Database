@@ -6,7 +6,7 @@ const CustomerHeader = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem("name");
-    navigate("/Printer-Simulation");
+    navigate("/BTL-Database");
   };
 
   return (

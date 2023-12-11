@@ -4,6 +4,18 @@
 
 SPS-FE-Project is a front-end project. The project is currently deployed at [GitHub Pages](https://minhhieu212.github.io/BTL-Database/).
 
+### Admin account
+
+Admin
+
+### Store account
+
+Store Owner
+
+### Customer account
+
+Customer
+
 ## Installation
 
 To run the project locally, follow these steps:
@@ -13,13 +25,15 @@ To run the project locally, follow these steps:
    ```bash
    git clone https://github.com/minhhieu212/BTL-Database.git
 
+   ```
+
 2. Navigate to the project directory:
 
-    cd BTL-Database
+   cd BTL-Database
 
 3. Install the required npm packages:
 
-    npm install
+   npm install
 
 ## Usage
 

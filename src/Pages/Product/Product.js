@@ -1,21 +1,13 @@
 import React from "react";
-import Categories from "../../Components/Categories/Categories";
 import ProductFilter from "../../Components/ProductFilter/ProductFilter";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
-import ProductFilterDate from "../../Components/ProductFilter/ProductFilterDate";
 
 const Product = () => {
   return (
     <div className="w-[1500px] mx-auto h-[95vh] mt-5">
       <div className="flex items-center justify-center w-full h-[280px] gap-3">
-        <div className="w-[40%] h-full">
-          <Categories></Categories>
-        </div>
-        <div className="w-[30%] h-full">
-          <ProductFilterDate></ProductFilterDate>
-        </div>
-        <div className="w-[30%] h-full">
+        <div className="w-[100%] h-full">
           <ProductFilter></ProductFilter>
         </div>
       </div>
@@ -32,7 +24,10 @@ const Product = () => {
                 <div className="mt-2 text-[18px]">
                   <p className="font-bold">{item?.name}</p>
                   <p className="text-gray-600">Price: {item?.price} $</p>
-                  <p className="text-green-500">Discount: {item?.discount}</p>
+                  <div className="flex item-center justify-between">
+                    <p className="text-gray-500">Stock: {item?.stock}</p>
+                    <p className="text-blue-500">Rating: {item?.rating} / 5</p>
+                  </div>
                 </div>
               </Link>
             </div>

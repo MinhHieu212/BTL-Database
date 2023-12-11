@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductList, exampleComments } from "./ProductList";
-import EditCommentModal from "../../Components/Modal/EditCommentModal";
 import { toast } from "../../Components/Toastify/Toastify";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [comments, setComments] = useState([]);
-  const [rating, setRating] = useState(5);
 
   useEffect(() => {
     console.log("Get product with productId :", productId);
@@ -17,7 +15,14 @@ const ProductDetail = () => {
   const product = ProductList.find((item) => item.id === parseInt(productId));
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} ${product?.name} to cart`);
+
+    // call function create cart (id_product , id_user)
+
+    console.log(
+      `Added ${quantity} ${product?.name} to cart and total price: $ ${
+        quantity * product?.price
+      } `
+    );
 
     toast.success("Add product to cart successfully");
   };
@@ -25,29 +30,6 @@ const ProductDetail = () => {
   if (!product) {
     return <p>Sản phẩm không tồn tại</p>;
   }
-
-  const handleRatingChange = (e) => {
-    setRating(parseInt(e.target.value));
-  };
-
-  const handleAddComment = () => {
-    console.log("New comment and rating insert", {
-      comments: comments,
-      rating: rating,
-      id_prodcut: productId,
-      id_buyer: sessionStorage.getItem("id_user") || 1,
-    });
-    setComments("");
-  };
-
-  const handleEditComment = (id_comment) => {
-    console.log("Edit comment : ", id_comment);
-  };
-  const handleRemoveComment = (id_comment) => {
-    console.log("Remove comment : ", id_comment);
-
-    toast.success("Remove comment successfully");
-  };
 
   return (
     <div className="w-[1500px] mx-auto h-[95vh] ">
@@ -62,15 +44,24 @@ const ProductDetail = () => {
         <div className="w-1/2 flex flex-col items-start justify-start px-7 py-5 gap-4 text-[18px] h-[600px] shadow-xl">
           <h2 className="w-full text-[30px] font-bold ">{product?.name}</h2>
           <p>
-            <span className="text font-bold">Price: </span>${product?.price}
+            <span className="text font-bold pr-3">Price: </span>$
+            {product?.price}
           </p>
           <p>
-            <span className="text font-bold">Discount: </span>{" "}
-            {product?.discount}
+            <span className="text font-bold pr-3">Stock: </span>{" "}
+            {product?.stock}
+          </p>
+          <p>
+            <span className="text font-bold pr-3">Remaining: </span>
+            {product?.remaining || 89}
+          </p>
+          <p>
+            <span className="text font-bold pr-3">Rating: </span>{" "}
+            {product?.rating} / 5
           </p>
 
           <p>
-            <span className="text font-bold">Mô tả sản phẩm: </span>
+            <span className="text font-bold pr-3">Mô tả sản phẩm: </span>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
             est iure non libero repudiandae dolores officiis culpa facere hic
             accusantium dolor totam ex, dolorem nulla doloribus minima aperiam
@@ -103,28 +94,6 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className="w-full pb-5 shadow-xl mt-10">
-        <div className="text-[20px] mx-auto w-[95%] ml-10 font-bold  flex items-center justify-between">
-          <span> Comments </span>
-          <select
-            name="ratingStar"
-            id="ratingStar"
-            className="w-[100px] border-2 border-black px-2 py-1 rounded-lg"
-            onChange={handleRatingChange}
-            value={rating}
-          >
-            <option value="1">1 star</option>
-            <option value="2">2 stars</option>
-            <option value="3">3 stars</option>
-            <option value="4">4 stars</option>
-            <option value="5">5 stars</option>
-          </select>
-          <button
-            className="bg bg-slate-600 text-white p-2 rounded-lg"
-            onClick={handleAddComment}
-          >
-            Add comments
-          </button>
-        </div>
         <textarea
           name="commentTextArea"
           id="commentTextArea"
@@ -142,32 +111,12 @@ const ProductDetail = () => {
         <div className="w-full flex items-center justify-center gap-3 flex-col">
           {exampleComments.map((item, index) => (
             <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
-              <div className="w-full flex item-center gap-4 justify-end">
-                <EditCommentModal
-                  initComment={item?.detail}
-                  initRating={item?.ratingStar}
-                  id_comment={item?.id_comment}
-                >
-                  <button
-                    className="bg-slate-500 p-2 rounded-md text-white"
-                    onClick={() => handleEditComment(item?.id_comment)}
-                  >
-                    Edit
-                  </button>
-                </EditCommentModal>
-                <button
-                  className="bg-slate-500 p-2 rounded-md text-white"
-                  onClick={() => handleRemoveComment(item?.id_comment)}
-                >
-                  Remove
-                </button>
-              </div>
               <p>
                 <span className="text-[blue]">Detail: </span> {item?.detail}
               </p>
               <p>
                 <span className="text-[blue]">Rating Star: </span>{" "}
-                {item?.ratingStar}
+                {item?.ratingStar} / 5
               </p>
             </div>
           ))}

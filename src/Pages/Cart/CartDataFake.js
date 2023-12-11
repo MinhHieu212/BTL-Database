@@ -1,17 +1,16 @@
 export const productList = [
   {
-    id: 4,
+    id_cart: 4,
     image:
       "https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Tai nghe không dây",
     price: 80,
-    discount: "8%",
     category: "Electronics",
     rating: 4.2,
     stock: 40,
   },
   {
-    id: 5,
+    id_cart: 5,
     image:
       "https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Sách 'Tôi tài giỏi, bạn cũng thế'",
@@ -22,7 +21,7 @@ export const productList = [
     stock: 60,
   },
   {
-    id: 6,
+    id_cart: 6,
     image:
       "https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Giày nam",
@@ -33,7 +32,7 @@ export const productList = [
     stock: 50,
   },
   {
-    id: 7,
+    id_cart: 7,
     image:
       "https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     name: "Áo thun nữ",
@@ -57,6 +56,7 @@ export const discounts = [
     quantity: 100,
     discountMoney: null, // Nếu chiết khấu theo phần trăm, giữ nguyên là null
     discountType: "percent", // Hoặc 'money' nếu chiết khấu theo số tiền
+    totalMoney: 1000,
   },
   {
     id_discount: 2,
@@ -69,6 +69,7 @@ export const discounts = [
     quantity: 50,
     discountMoney: 20,
     discountType: "money",
+    totalMoney: 3444,
   },
   {
     id_discount: 3,
@@ -81,6 +82,7 @@ export const discounts = [
     quantity: 30,
     discountMoney: 10,
     discountType: "money",
+    totalMoney: 3444,
   },
   {
     id_discount: 4,
@@ -93,6 +95,22 @@ export const discounts = [
     quantity: 100,
     discountMoney: null, // Nếu chiết khấu theo phần trăm, giữ nguyên là null
     discountType: "percent", // Hoặc 'money' nếu chiết khấu theo số tiền
+    totalMoney: 5444,
   },
   // Thêm các đối tượng discount khác nếu cần
+];
+
+export const paymentMethodList = [
+  {
+    id_payment: 1,
+    name_payment: "Cerdit cart",
+  },
+  {
+    id_payment: 2,
+    name_payment: "Momo",
+  },
+  {
+    id_payment: 3,
+    name_payment: "Paya",
+  },
 ];

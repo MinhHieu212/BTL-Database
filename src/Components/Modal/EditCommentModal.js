@@ -2,15 +2,10 @@ import React, { useState } from "react";
 import CenterModal from "./CenterModal";
 import { toast } from "../Toastify/Toastify";
 
-const EditCommentModal = ({
-  children,
-  initRating,
-  initComment,
-  id_comment,
-}) => {
+const EditCommentModal = ({ children, id_product, action, id_order }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [rating, setRating] = useState(initRating);
-  const [comment, setComment] = useState(initComment);
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleClose = () => {
     setOpenModal(false);
@@ -24,26 +19,33 @@ const EditCommentModal = ({
     const data = {
       rating: rating,
       comment: comment,
-      id_comment: id_comment,
+      id_product: id_product,
+      id_order: id_order,
       id_user: sessionStorage.getItem("id_user"),
     };
 
     console.log("New comment after update : ", data);
 
-    setRating(initRating);
-    setComment(initComment);
+    setRating("");
+    setComment("");
     setOpenModal(false);
 
     toast.success("Update comment successfully");
   };
 
+  if (action === "Add") {
+    // call function edit comment  (id_user , id_product , id_order, comment , rating)
+  } else {
+    // call function get comment (id_user , id_product , id_order)
+    // call function edit comment  (id_user , id_product , id_order, comment , rating)
+  }
   return (
     <>
       <div onClick={() => setOpenModal(true)}> {children}</div>
       <CenterModal open={openModal} handleClose={handleClose}>
         <div className="content w-[800px]   overflow-hidden rounded-lg  border-[1px] border-[#367FA9]">
           <div className="header bg-slate-600 text-white text-[20px] font-bold flex items-center justify-center h-[60px] w-full">
-            Edit Product Comment
+            {action === "Add" ? " Add Product Comment" : "Edit Product Comment"}
           </div>
           <div className="flex items-center text-[18px] justify-between flex-col gap-5">
             <textarea

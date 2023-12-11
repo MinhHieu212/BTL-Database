@@ -15,7 +15,7 @@ export const UserInfoProvider = ({ children }) => {
     dob: "",
     address: "",
     phoneNumber: "",
-    userType: "customer",
+    userType: "buyer",
   });
 
   const updateUserInfo = (newUserInfo) => {

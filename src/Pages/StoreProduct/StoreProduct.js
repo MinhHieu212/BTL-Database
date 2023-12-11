@@ -138,7 +138,10 @@ const StoreProduct = () => {
                 <div className="mt-2 text-[18px]">
                   <p className="font-bold">{item?.name}</p>
                   <p className="text-gray-600">Price: {item?.price} $</p>
-                  <p className="text-green-500">Discount: {item?.discount}</p>
+                  <div className="flex item-center justify-between">
+                    <p className="text-gray-500">Stock: {item?.stock}</p>
+                    <p className="text-blue-500">Rating: {item?.rating}</p>
+                  </div>
                 </div>
               </Link>
             </div>

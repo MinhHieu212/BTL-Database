@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import { userList } from "./UserListFake";
+import { SearchIcon } from "../../Assets/icons";
 
 const AdminUsersList = () => {
   const [selectedUserType, setSelectedUserType] = useState("all");
   const [users, setUsers] = useState(userList);
+  const [searchParams, setSearchParams] = useState();
 
   const handleDeleteUser = (userId) => {
-    // "Chỉ được phép xóa người dùng khi người đó không có đơn hàng nào"
-    console.log("Delete User with Id: ", userId);
+    console.log("Params remvoe user: ", { id_user: userId });
+
+    // Call funtion filter user List  - re-render list
+    // setUsers()
   };
 
   const handleUserTypeFilter = (userType) => {
     setSelectedUserType(userType);
-    if (userType === "all") {
-      setUsers(userList);
-    } else {
-      const filteredUsers = userList.filter(
-        (user) => user.userType === userType
-      );
-      setUsers(filteredUsers);
-    }
+
+    console.log("Filter User by User Type: ", userType);
+
+    // Call funtion filter user List
+    // setUsers()
+  };
+
+  const handleSearchUser = (e) => {
+    e.preventDefault();
+
+    console.log("Search User: ", searchParams);
+    // Call funtion filter user List
+    // setUsers()
   };
 
   return (
@@ -27,39 +36,58 @@ const AdminUsersList = () => {
       <h2 className="text-[24px] font-bold mb-4 px-10">User List</h2>
       <div className="w-full h-[90vh] shadow-xl overflow-y-auto p-4 text-[18px]">
         <div className="flex gap-4 mb-4 w-full items-center justify-center text-[20px] font-bold">
-          <label>
-            <input
-              type="radio"
-              name="userType"
-              value="all"
-              checked={selectedUserType === "all"}
-              onChange={() => handleUserTypeFilter("all")}
-              className="w-5 h-5 mx-3"
-            />
-            <span> All</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="userType"
-              value="customer"
-              checked={selectedUserType === "customer"}
-              onChange={() => handleUserTypeFilter("customer")}
-              className="w-5 h-5 mx-3"
-            />
-            <span> Customer</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="userType"
-              value="storeOwner"
-              checked={selectedUserType === "storeOwner"}
-              onChange={() => handleUserTypeFilter("storeOwner")}
-              className="w-5 h-5 mx-3"
-            />
-            <span> Store Owner</span>
-          </label>
+          <div className="w-full flex flex-col items-center justify-center ">
+            <div className=" flex items-center gap-5 mb-5">
+              <input
+                type="text"
+                id="searchUser"
+                value={searchParams}
+                className="w-[350px] p-2 border-2 border-black ml-10 rounded-md font-normal mb-3"
+                placeholder="Search  name user"
+                onChange={(e) => {
+                  setSearchParams(e.target.value);
+                }}
+              />
+              <div onClick={handleSearchUser}>
+                <SearchIcon></SearchIcon>
+              </div>
+            </div>
+            <div className=" flex items-center gap-5">
+              <label>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="all"
+                  checked={selectedUserType === "all"}
+                  onChange={() => handleUserTypeFilter("all")}
+                  className="w-5 h-5 mx-3"
+                />
+                <span> All</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="Buyer"
+                  checked={selectedUserType === "Buyer"}
+                  onChange={() => handleUserTypeFilter("Buyer")}
+                  className="w-5 h-5 mx-3"
+                />
+                <span> Buyer </span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="Store Owner"
+                  checked={selectedUserType === "Store Owner"}
+                  onChange={() => handleUserTypeFilter("Store Owner")}
+                  className="w-5 h-5 mx-3"
+                />
+                <span> Store Owner </span>
+              </label>
+            </div>
+          </div>
         </div>
 
         {users.map((user) => (
@@ -78,22 +106,34 @@ const AdminUsersList = () => {
 
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
-                  Email:{" "}
+                  User Name:{" "}
                 </span>
-                {user.email}
+                {user.name}
               </p>
 
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
-                  Address:{" "}
+                  Birthday:{" "}
                 </span>
-                {user.address}
+                {user.dob}
+              </p>
+              <p className="mb-2">
+                <span className="text-[blue] font-bold text-[18px]">
+                  Email:{" "}
+                </span>
+                {user.email}
               </p>
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   Phone Number:{" "}
                 </span>
                 {user.pNumber}
+              </p>
+              <p className="mb-2">
+                <span className="text-[blue] font-bold text-[18px]">
+                  Address:{" "}
+                </span>
+                {user.address}
               </p>
             </div>
             <button

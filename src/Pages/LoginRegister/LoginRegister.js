@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { useUserInfo } from "../../Contexts/UserInfoContext";
 import { useNavigate } from "react-router-dom";
 
 const LoginRegister = () => {
-  const useUserInfoContext = useUserInfo();
   const navigate = useNavigate();
+
   const [userInfo, setUserInfo] = useState({
     email: "",
     address: "",
     pNumber: "",
     name: "",
+    username: "",
     password: "",
     dob: "",
     userType: "customer",
   });
 
   sessionStorage.removeItem("name");
+  sessionStorage.removeItem("password");
+  sessionStorage.removeItem("id_user");
+  sessionStorage.removeItem("userType");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,21 +33,24 @@ const LoginRegister = () => {
   };
 
   const handleLogin = () => {
-    const dataLogin = {
-      name: userInfo.name,
+    const loginData = {
+      name: userInfo.username,
       password: userInfo.password,
     };
-    console.log("Đăng nhập:", dataLogin);
+    console.log("Đăng nhập:", loginData);
 
-    useUserInfoContext?.updateUserInfo(dataLogin);
+    // call function login
+    // set user info setUserInfo(response)
 
-    sessionStorage.setItem("name", userInfo.name);
+    sessionStorage.setItem("name", userInfo.name || userInfo.username);
     sessionStorage.setItem("password", userInfo.password);
-    // sessionStorage.setItem("id_user", userInfo.id_user);
+    sessionStorage.setItem("id_user", userInfo?.id_user || 1);
+    sessionStorage.setItem("userType", userInfo.username); // dùng tạm user name để phần quyền vì header dựa trên userType
+    // sessionStorage.setItem("userType", userInfo.userType);
 
-    if (sessionStorage.getItem("name") === "admin") {
+    if (sessionStorage.getItem("name") === "Admin") {
       navigate("/adminUserList");
-    } else if (sessionStorage.getItem("name") === "store") {
+    } else if (sessionStorage.getItem("name") === "Store Owner") {
       navigate("/storeProduct");
     } else {
       navigate("/product");
@@ -55,6 +61,24 @@ const LoginRegister = () => {
     <div className="w-[1500px] mx-auto  flex items-stretch justify-center gap-5 text-[18px]">
       <div className="w-[40%] p-10 shadow-2xl rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-[#5a5757]">Đăng kí</h2>
+        <label className="block font-bold mt-3 mb-2">Username:</label>
+        <input
+          type="username"
+          name="username"
+          value={userInfo.username}
+          onChange={handleInputChange}
+          className="border p-2 mb-2 w-full"
+        />
+        <br />
+        <label className="block font-bold mt-3 mb-2">Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={userInfo.password}
+          onChange={handleInputChange}
+          className="border p-2 mb-2 w-full"
+        />
+        <br />
         <label className="block font-bold mt-3 mb-2">Email:</label>
         <input
           type="email"
@@ -111,15 +135,7 @@ const LoginRegister = () => {
           <option value="storeOwner">Store Owner</option>
         </select>
         <br />
-        <label className="block font-bold mt-3 mb-2">Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={userInfo.password}
-          onChange={handleInputChange}
-          className="border p-2 mb-2 w-full"
-        />
-        <br />
+
         <button
           onClick={handleRegister}
           className="bg-[#5a5757] mt-3 font-bold text-white px-4 py-2 rounded"
@@ -130,11 +146,11 @@ const LoginRegister = () => {
 
       <div className="w-[40%] p-10 shadow-2xl rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-[#5a5757]">Đăng nhập</h2>
-        <label className="block font-bold mt-3 mb-2">Name:</label>
+        <label className="block font-bold mt-3 mb-2">Username:</label>
         <input
           type="text"
-          name="name"
-          value={userInfo.name}
+          name="username"
+          value={userInfo.username}
           onChange={handleInputChange}
           className="border p-2 mb-2 w-full"
         />

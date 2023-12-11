@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Product from "./Pages/Product/Product";
 import CustomerHeader from "./Components/Header/CustomerHeader";
 import Cart from "./Pages/Cart/Cart";
@@ -16,14 +16,45 @@ import StoreDiscountList from "./Pages/StoreDiscountList/StoreDiscountList.js";
 import StoreProductDetails from "./Pages/StoreProduct/StoreProductDetails.js";
 
 function App() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("password");
+    sessionStorage.removeItem("id_user");
+    sessionStorage.removeItem("userType");
+    navigate("/BTL-Database");
+  };
+
   return (
     <div className="">
       <div className="fixed">
+        <div
+          className={`w-[100vw] h-[60px] bg-slate-600 flex items-center justify-between gap-3 px-2 md:px-10 border-b-2 border-black `}
+        >
+          <div className="text-[24px] font-bold text-white">
+            CommerceConnect
+          </div>
+          <div className="text-end w-[500px] flex items-center justify-end">
+            <span className="font-bold text-white text-[18px] cursor-pointer uppercase">
+              {sessionStorage.getItem("name")}
+            </span>
+            <span className="font-bold text-white text-[18px] cursor-pointer pl-3">
+              ( {sessionStorage.getItem("userType")}) |
+            </span>
+            <span
+              className="font-bold text-white text-[18px] cursor-pointer ml-3"
+              onClick={handleLogout}
+            >
+              Logout
+            </span>
+          </div>
+        </div>
         <CustomerHeader></CustomerHeader>
         <AdminHeader></AdminHeader>
         <StoreOwnerHeader></StoreOwnerHeader>
       </div>
-      <div className="w-full h-[95vh] pt-[60px]">
+      <div className="w-full h-[95vh] pt-[120px]">
         <Routes>
           <Route path="/" element={<Product />} />
           <Route path="/product" element={<Product />} />

@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/BTL-Database/static/css/main.ecc9fd3b.css",
-    "main.js": "/BTL-Database/static/js/main.42340107.js",
+    "main.css": "/BTL-Database/static/css/main.ec8cdfbe.css",
+    "main.js": "/BTL-Database/static/js/main.2857a24b.js",
     "index.html": "/BTL-Database/index.html",
-    "main.ecc9fd3b.css.map": "/BTL-Database/static/css/main.ecc9fd3b.css.map",
-    "main.42340107.js.map": "/BTL-Database/static/js/main.42340107.js.map"
+    "main.ec8cdfbe.css.map": "/BTL-Database/static/css/main.ec8cdfbe.css.map",
+    "main.2857a24b.js.map": "/BTL-Database/static/js/main.2857a24b.js.map"
   },
   "entrypoints": [
-    "static/css/main.ecc9fd3b.css",
-    "static/js/main.42340107.js"
+    "static/css/main.ec8cdfbe.css",
+    "static/js/main.2857a24b.js"
   ]
 }

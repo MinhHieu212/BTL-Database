@@ -34,9 +34,9 @@ const AdminDiscountList = () => {
   };
 
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
+    <div className="w-[80vw] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
       <div className="w-[40%] shadow-xl">
-        <h2 className="text-[24px] font-bold mb-4 px-10">
+        <h2 className="text-[24px] font-bold mb-4 px-10 text-blue-800 uppercase">
           Create New Discount
         </h2>
 
@@ -242,7 +242,9 @@ const AdminDiscountList = () => {
         </button>
       </div>
       <div className="w-[50%] shadow-xl">
-        <h2 className="text-[24px] font-bold mb-4 px-10">Discount List</h2>
+        <h2 className="text-[24px] font-bold mb-4 px-10 text-blue-800 uppercase">
+          Discount List
+        </h2>
 
         <div className="w-full h-[90vh] shadow-xl overflow-y-auto p-4 text-[18px]">
           {discounts.map((discount) => (

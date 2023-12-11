@@ -65,7 +65,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] flex  mt-5  ">
+    <div className="w-[80vw] mx-auto h-[95vh] flex  mt-5  ">
       <div className="w-2/3 p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold">Your Cart</h2>

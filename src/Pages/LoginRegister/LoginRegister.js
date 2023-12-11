@@ -42,9 +42,12 @@ const LoginRegister = () => {
     // call function login
     // set user info setUserInfo(response)
 
+    // call function  get Store ID
+
     sessionStorage.setItem("name", userInfo.name || userInfo.username);
     sessionStorage.setItem("password", userInfo.password);
     sessionStorage.setItem("id_user", userInfo?.id_user || 1);
+    sessionStorage.setItem("id_store", 12);
     sessionStorage.setItem("userType", userInfo.username); // dùng tạm user name để phần quyền vì header dựa trên userType
     // sessionStorage.setItem("userType", userInfo.userType);
 
@@ -58,7 +61,7 @@ const LoginRegister = () => {
   };
 
   return (
-    <div className="w-[1500px] mx-auto  flex items-stretch justify-center gap-5 text-[18px]">
+    <div className="w-[80vw] mx-auto  flex items-stretch justify-center gap-5 text-[18px]">
       <div className="w-[40%] p-10 shadow-2xl rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-[#5a5757]">Đăng kí</h2>
         <label className="block font-bold mt-3 mb-2">Username:</label>

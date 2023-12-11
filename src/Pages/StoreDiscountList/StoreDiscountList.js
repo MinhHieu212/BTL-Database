@@ -34,7 +34,7 @@ const StoreDiscountList = () => {
   };
 
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
+    <div className="w-[80vw] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
       <div className="w-[40%] shadow-xl">
         <h2 className="text-[24px] font-bold mb-4 px-10">
           Create New Discount
@@ -44,7 +44,7 @@ const StoreDiscountList = () => {
           <div className="ml-10 w-full flex flex-col items-center justify-start gap-5 text-[18px]">
             <div className="flex items-center justify-start  gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="date_start"
               >
                 Start Date:
@@ -61,7 +61,7 @@ const StoreDiscountList = () => {
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="date_end"
               >
                 End Date:
@@ -78,7 +78,7 @@ const StoreDiscountList = () => {
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="discountType"
               >
                 Discount Type:
@@ -102,7 +102,7 @@ const StoreDiscountList = () => {
               <>
                 <div className="flex items-center justify-start gap-4">
                   <label
-                    className="font-bold w-[200px] text-[blue]"
+                    className="font-bold w-[200px] text-gray-800"
                     htmlFor="discountPercent"
                   >
                     Discount Percent:
@@ -150,7 +150,7 @@ const StoreDiscountList = () => {
 
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="maxDiscount"
               >
                 Max Discount:
@@ -170,7 +170,7 @@ const StoreDiscountList = () => {
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="minBill"
               >
                 Min Bill:
@@ -190,7 +190,7 @@ const StoreDiscountList = () => {
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="id_category"
               >
                 Category ID:
@@ -210,7 +210,7 @@ const StoreDiscountList = () => {
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
-                className="font-bold w-[200px] text-[blue]"
+                className="font-bold w-[200px] text-gray-800"
                 htmlFor="quantity"
               >
                 Quantity:
@@ -232,7 +232,7 @@ const StoreDiscountList = () => {
         </div>
 
         <button
-          className="bg-blue-500 text-white ml-10 inline-block mt-10  px-4 py-2 rounded mb-4"
+          className="bg-gray-800 font-bold text-white ml-10 inline-block mt-10  px-4 py-2 rounded mb-4"
           onClick={() => {
             handleAddDiscount();
           }}
@@ -249,23 +249,23 @@ const StoreDiscountList = () => {
               key={discount.id_discount}
               className="border border-gray-300 p-4 mb-4 rounded-lg"
             >
-              <p className="text-lg font-bold mb-2">
+              <p className="text-lg text-blue-500 font-bold mb-2">
                 Discount ID: {discount.id_discount}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Start Date:{" "}
                 </span>
                 {discount.date_start}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   End Date:{" "}
                 </span>
                 {discount.date_end}
               </p>
               <p>
-                <span className="text-[blue]  font-bold text-[18px]">
+                <span className="text-gray-800  font-bold text-[18px]">
                   Discount Percent:{" "}
                 </span>
                 {discount.discountType === "percent"
@@ -273,7 +273,7 @@ const StoreDiscountList = () => {
                   : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Discount Money:{" "}
                 </span>
                 {discount.discountType === "money"
@@ -281,25 +281,25 @@ const StoreDiscountList = () => {
                   : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Max Discount:{" "}
                 </span>
                 {discount.maxDiscount ? `$${discount.maxDiscount}` : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Min Bill:{" "}
                 </span>
                 {discount.minBill ? `$${discount.minBill}` : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Quantity:{" "}
                 </span>
                 {discount.quantity}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-gray-800 font-bold text-[18px]">
                   Category ID:{" "}
                 </span>
                 {discount.id_category}

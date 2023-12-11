@@ -6,7 +6,6 @@ import { toast } from "../../Components/Toastify/Toastify";
 const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     console.log("Get product with productId :", productId);
@@ -15,7 +14,6 @@ const ProductDetail = () => {
   const product = ProductList.find((item) => item.id === parseInt(productId));
 
   const handleAddToCart = () => {
-
     // call function create cart (id_product , id_user)
 
     console.log(
@@ -32,8 +30,8 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] ">
-      <div className="w-[1500px] mx-auto flex items-start mt-5 justify-center">
+    <div className="w-[80vw] mx-auto h-[95vh] ">
+      <div className="w-full mx-auto flex items-start mt-5 justify-center">
         <div className="w-1/2  flex items-start justify-center rounded-lg overflow-hidden h-[600px] px-7 py-5 shadow-xl">
           <img
             src={product?.image}
@@ -94,17 +92,6 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className="w-full pb-5 shadow-xl mt-10">
-        <textarea
-          name="commentTextArea"
-          id="commentTextArea"
-          cols="30"
-          value={comments}
-          rows="10"
-          className="p-5 border-2 border-black outline-none mx-auto w-[95%] inline-block ml-10 rounded-lg h-[100px] resize-none mt-3"
-          placeholder="Write comment"
-          onChange={(e) => setComments(e.target.value)}
-        ></textarea>
-
         <div className="text-[20px] w-[95%] ml-10 font-bold  mt-5 first-letter:flex items-center justify-between">
           <span> List Comments </span>
         </div>

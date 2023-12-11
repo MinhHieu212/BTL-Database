@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Product = () => {
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] mt-5">
+    <div className="w-[80vw] mx-auto h-[95vh] mt-5">
       <div className="flex items-center justify-center w-full h-[280px] gap-3">
         <div className="w-[100%] h-full">
           <ProductFilter></ProductFilter>

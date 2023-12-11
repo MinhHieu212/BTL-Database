@@ -14,6 +14,7 @@ import StoreRevanue from "./Pages/StoreRevanue/StoreRevanue.js";
 import StoreProduct from "./Pages/StoreProduct/StoreProduct.js";
 import StoreDiscountList from "./Pages/StoreDiscountList/StoreDiscountList.js";
 import StoreProductDetails from "./Pages/StoreProduct/StoreProductDetails.js";
+import StoreOrderList from "./Pages/StoreOrderList/StoreOrderList.js";
 
 function App() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function App() {
     <div className="">
       <div className="fixed">
         <div
-          className={`w-[100vw] h-[60px] bg-slate-600 flex items-center justify-between gap-3 px-2 md:px-10 border-b-2 border-black `}
+          className={`w-[100vw] h-[60px] bg-gray-800 flex items-center justify-between gap-3 px-2 md:px-10 border-b-2 border-black `}
         >
           <div className="text-[24px] font-bold text-white">
             CommerceConnect
@@ -70,6 +71,7 @@ function App() {
           />
           <Route path="/storeRevenue" element={<StoreRevanue />} />
           <Route path="/storeDiscountList" element={<StoreDiscountList />} />
+          <Route path="/storeOrdertList" element={<StoreOrderList />} />
           <Route path="/adminUserList" element={<AdminUsersList />} />
           <Route path="/adminDiscountList" element={<AdminDiscountList />} />
         </Routes>

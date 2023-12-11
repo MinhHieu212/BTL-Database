@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const AdminHeader = () => {
   return (
     <div
-      className={`w-[100vw] h-[60px] bg-slate-600 items-center justify-center gap-3 px-2 md:px-10 
+      className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
       ${sessionStorage.getItem("userType") === "Admin" ? "flex" : "hidden"}`}
     >
       <nav className="w-[600px] h-full">

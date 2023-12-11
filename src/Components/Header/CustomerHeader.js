@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const CustomerHeader = () => {
   return (
     <div
-      className={`w-[100vw] h-[60px] bg-slate-600 items-center justify-center gap-3 px-2 md:px-10 
+      className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
       ${
         sessionStorage.getItem("userType") !== "Store Owner" &&
         sessionStorage.getItem("userType") !== "Admin"
@@ -26,7 +26,7 @@ const CustomerHeader = () => {
           </li>
           <li>
             <NavLink to="/orders">
-              <span className="text-white uppercase"> Orders</span>
+              <span className="text-white uppercase"> Order - History</span>
             </NavLink>
           </li>
         </ul>

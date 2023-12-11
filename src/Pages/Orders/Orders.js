@@ -7,6 +7,15 @@ const Orders = () => {
   const [data, setData] = useState(OrderData);
   const [dataHistory, setDataHistory] = useState(HistoryData);
 
+  const handleDeleteComment = (id_order, id_product) => {
+    const params = {
+      id_order: id_order,
+      id_product: id_product,
+      id_user: sessionStorage.getItem("id_user"),
+    };
+    console.log("Delete product comment : ", params);
+  };
+
   useEffect(() => {
     // Call function filter Orders/Bill/Paided List
 
@@ -19,7 +28,7 @@ const Orders = () => {
   }, [selectedStatus]);
 
   return (
-    <div className="w-[1500px] mx-auto h-[95vh] mt-10 ">
+    <div className=" w-[80vw] mx-auto h-[95vh] mt-10 ">
       <div className="flex item-center justify-between gap-3">
         <div className="w-[48%] ">
           <div className="w-full flex item-center justify-between">
@@ -60,49 +69,43 @@ const Orders = () => {
                 <div>
                   <p className="text-lg font-bold mb-2">Time: {bill.time}</p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
-                      Order Id:{" "}
-                    </span>
+                    <span className=" font-bold text-[18px]">Order Id: </span>
                     {bill.id_order}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
-                      Status:{" "}
-                    </span>
+                    <span className=" font-bold text-[18px]">Status: </span>
                     {bill.status}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
+                    <span className=" font-bold text-[18px]">
                       Total Price:{" "}
                     </span>
                     ${bill.totalPrice.toFixed(2)}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
-                      Address:{" "}
-                    </span>
+                    <span className=" font-bold text-[18px]">Address: </span>
                     {bill.address}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
+                    <span className=" font-bold text-[18px]">
                       Phone Number:{" "}
                     </span>
                     {bill.phoneNumber}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
+                    <span className=" font-bold text-[18px]">
                       Number of Items:{" "}
                     </span>
                     {bill.noItem}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
+                    <span className=" font-bold text-[18px]">
                       Discount Name:{" "}
                     </span>
                     {bill?.discount_name}
                   </p>
                   <p className="mb-2">
-                    <span className="text-[blue] font-bold text-[18px]">
+                    <span className=" font-bold text-[18px]">
                       Payment Method:{" "}
                     </span>
                     {bill?.pm_name}
@@ -130,33 +133,29 @@ const Orders = () => {
                   <div className="w-[50%] p-5 flex flex-col items-start justify-center">
                     <p className="text-lg font-bold mb-2">Time: {bill.time}</p>
                     <p className="mb-2">
-                      <span className="text-[blue] font-bold text-[18px]">
+                      <span className=" font-bold text-[18px]">
                         Product ID:{" "}
                       </span>
                       {bill.id_product}
                     </p>
                     <p className="mb-2">
-                      <span className="text-[blue] font-bold text-[18px]">
+                      <span className=" font-bold text-[18px]">
                         Product Name:{" "}
                       </span>
                       {bill.product_name}
                     </p>
                     <p className="mb-2">
-                      <span className="text-[blue] font-bold text-[18px]">
-                        Order Id:{" "}
-                      </span>
+                      <span className=" font-bold text-[18px]">Order Id: </span>
                       {bill.id_order}
                     </p>
                     <p className="mb-2">
-                      <span className="text-[blue] font-bold text-[18px]">
+                      <span className=" font-bold text-[18px]">
                         Total Price:{" "}
                       </span>
                       ${bill.totalPrice.toFixed(2)}
                     </p>
                     <p className="mb-2">
-                      <span className="text-[blue] font-bold text-[18px]">
-                        Quantity:{" "}
-                      </span>
+                      <span className=" font-bold text-[18px]">Quantity: </span>
                       {bill.quantity}
                     </p>
                   </div>
@@ -175,12 +174,25 @@ const Orders = () => {
                     id_product={bill?.id_product}
                     id_order={bill.id_order}
                   >
-                    <button className="py-2 px-3 bg-blue-500 mb-2 text-white font-bold rounded-md">
+                    <button className="py-2 px-3 bg-gray-800 mb-2 text-white font-bold rounded-md">
                       {bill?.ratingYet === "no"
                         ? "Add comment"
                         : "Edit comment"}
                     </button>
                   </EditCommentModal>
+
+                  {bill?.ratingYet === "no" ? (
+                    ""
+                  ) : (
+                    <button
+                      className="py-2 px-3 ml-3 bg-red-500 mb-2 text-white font-bold rounded-md"
+                      onClick={() =>
+                        handleDeleteComment(bill.id_order, bill?.id_product)
+                      }
+                    >
+                      Delete Comment
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

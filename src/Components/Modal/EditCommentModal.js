@@ -38,7 +38,7 @@ const EditCommentModal = ({ children, id_product, action, id_order }) => {
   } else {
     // call function get comment (id_user , id_product , id_order)
     // call function edit comment  (id_user , id_product , id_order, comment , rating)
-  }
+  } 
   return (
     <>
       <div onClick={() => setOpenModal(true)}> {children}</div>

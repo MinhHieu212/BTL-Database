@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const StoreOwnerHeader = () => {
   return (
     <div
-      className={`w-[100vw] h-[60px] bg-slate-600 items-center justify-center gap-3 px-2 md:px-10 
+      className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
       ${
         sessionStorage.getItem("userType") === "Store Owner" ? "flex" : "hidden"
       }`}
@@ -24,6 +24,11 @@ const StoreOwnerHeader = () => {
           <li>
             <NavLink to="/storeRevenue">
               <span className="text-white uppercase"> Revenue </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/storeOrdertList">
+              <span className="text-white uppercase"> OrderList </span>
             </NavLink>
           </li>
           <li>

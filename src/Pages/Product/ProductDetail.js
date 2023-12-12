@@ -6,26 +6,36 @@ import { toast } from "../../Components/Toastify/Toastify";
 const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    console.log("Get product with productId :", productId);
-  }, [productId]);
+  const [comments, setComments] = useState(exampleComments);
 
   const product = ProductList.find((item) => item.id === parseInt(productId));
 
+  const [ProductDetail, setProductDetail] = useState(product);
+
+  useEffect(() => {
+    // call function get product details (product Id)
+
+    // setProductDetail;
+
+    // call function get list commnet (product Id)
+
+    // setComments;
+    console.log("Get product with productId :", productId);
+  }, [productId]);
+
   const handleAddToCart = () => {
-    // call function create cart (id_product , id_user)
+    // call function create cart (id_product , id_user, quantity)
 
     console.log(
-      `Added ${quantity} ${product?.name} to cart and total price: $ ${
-        quantity * product?.price
+      `Added ${quantity} ${ProductDetail?.name} to cart and total price: $ ${
+        quantity * ProductDetail?.price
       } `
     );
 
     toast.success("Add product to cart successfully");
   };
 
-  if (!product) {
+  if (!ProductDetail) {
     return <p>Sản phẩm không tồn tại</p>;
   }
 
@@ -34,28 +44,30 @@ const ProductDetail = () => {
       <div className="w-full mx-auto flex items-start mt-5 justify-center">
         <div className="w-1/2  flex items-start justify-center rounded-lg overflow-hidden h-[600px] px-7 py-5 shadow-xl">
           <img
-            src={product?.image}
-            alt={product?.name}
+            src={ProductDetail?.image}
+            alt={ProductDetail?.name}
             className="w-full h-full object-cover object-center rounded-lg shadow-lg"
           />
         </div>
         <div className="w-1/2 flex flex-col items-start justify-start px-7 py-5 gap-4 text-[18px] h-[600px] shadow-xl">
-          <h2 className="w-full text-[30px] font-bold ">{product?.name}</h2>
+          <h2 className="w-full text-[30px] font-bold ">
+            {ProductDetail?.name}
+          </h2>
           <p>
             <span className="text font-bold pr-3">Price: </span>$
-            {product?.price}
+            {ProductDetail?.price}
           </p>
           <p>
             <span className="text font-bold pr-3">Stock: </span>{" "}
-            {product?.stock}
+            {ProductDetail?.stock}
           </p>
           <p>
             <span className="text font-bold pr-3">Remaining: </span>
-            {product?.remaining || 89}
+            {ProductDetail?.remaining || 89}
           </p>
           <p>
             <span className="text font-bold pr-3">Rating: </span>{" "}
-            {product?.rating} / 5
+            {ProductDetail?.rating} / 5
           </p>
 
           <p>
@@ -96,7 +108,7 @@ const ProductDetail = () => {
           <span> List Comments </span>
         </div>
         <div className="w-full flex items-center justify-center gap-3 flex-col">
-          {exampleComments.map((item, index) => (
+          {comments.map((item, index) => (
             <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
               <p>
                 <span className="text-[blue]">Detail: </span> {item?.detail}

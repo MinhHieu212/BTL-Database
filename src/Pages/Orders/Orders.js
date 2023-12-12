@@ -190,7 +190,7 @@ const Orders = () => {
                         handleDeleteComment(bill.id_order, bill?.id_product)
                       }
                     >
-                      Delete Comment
+                      Delete comment
                     </button>
                   )}
                 </div>

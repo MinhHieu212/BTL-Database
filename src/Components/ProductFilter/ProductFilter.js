@@ -133,7 +133,7 @@ const ProductFilter = () => {
         >
           <div className="w-[90%]">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Tên sản phẩm
+              Product name
             </label>
             <input
               type="text"
@@ -222,7 +222,7 @@ const ProductFilter = () => {
             onClick={handleFilterChange}
             className=" text-white px-4 py-2 rounded bg-slate-600 font-bold text-[18px]"
           >
-            Áp dụng
+            Apply
           </button>
         </div>
       </div>

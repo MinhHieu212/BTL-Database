@@ -6,7 +6,7 @@ export const userList = [
     email: "john.doe@example.com",
     address: "123 Main St, Cityville",
     pNumber: "123-456-7890",
-    userType: "customer",
+    userType: "Customer",
   },
   {
     id_user: 2,
@@ -15,7 +15,7 @@ export const userList = [
     email: "jane.smith@example.com",
     address: "456 Oak St, Townsville",
     pNumber: "987-654-3210",
-    userType: "customer",
+    userType: "Customer",
   },
   {
     id_user: 3,
@@ -24,7 +24,7 @@ export const userList = [
     email: "alice.johnson@example.com",
     address: "789 Pine St, Villagetown",
     pNumber: "567-890-1234",
-    userType: "customer",
+    userType: "Customer",
   },
   {
     id_user: 4,
@@ -42,7 +42,7 @@ export const userList = [
     email: "emily.brown@example.com",
     address: "654 Birch St, Suburbia",
     pNumber: "234-567-8901",
-    userType: "customer",
+    userType: "Customer",
   },
   {
     id_user: 6,
@@ -51,6 +51,6 @@ export const userList = [
     email: "admin@example.com",
     address: "789 Admin St, Adminville",
     pNumber: "876-543-2109",
-    userType: "customer",
+    userType: "Customer",
   },
 ];

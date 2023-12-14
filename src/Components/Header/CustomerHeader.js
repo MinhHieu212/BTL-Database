@@ -6,8 +6,8 @@ const CustomerHeader = () => {
     <div
       className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
       ${
-        sessionStorage.getItem("userType") !== "Store Owner" &&
-        sessionStorage.getItem("userType") !== "Admin"
+        sessionStorage.getItem("usertype") !== "Store Owner" &&
+        sessionStorage.getItem("usertype") !== "Admin"
           ? "flex"
           : "hidden"
       }`}

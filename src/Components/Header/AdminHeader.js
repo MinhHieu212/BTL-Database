@@ -5,7 +5,7 @@ const AdminHeader = () => {
   return (
     <div
       className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
-      ${sessionStorage.getItem("userType") === "Admin" ? "flex" : "hidden"}`}
+      ${sessionStorage.getItem("usertype") === "Admin" ? "flex" : "hidden"}`}
     >
       <nav className="w-[600px] h-full">
         <ul className="flex items-center justify-between w-full h-full font-bold text-[18px] md:text-[24px]">

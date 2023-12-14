@@ -21,9 +21,13 @@ function App() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("name");
-    sessionStorage.removeItem("password");
     sessionStorage.removeItem("id_user");
-    sessionStorage.removeItem("userType");
+    sessionStorage.removeItem("id_store");
+    sessionStorage.removeItem("usertype");
+    sessionStorage.removeItem("address");
+    sessionStorage.removeItem("dob");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("pNumber");
     navigate("/BTL-Database");
   };
 
@@ -36,18 +40,18 @@ function App() {
           <div className="text-[24px] font-bold text-white">
             CommerceConnect
           </div>
-          <div className="text-end w-[500px] flex items-center justify-end">
+          <div className="text-end w-[800px] flex items-center justify-end">
             <span className="font-bold text-white text-[18px] cursor-pointer uppercase">
               {sessionStorage.getItem("name")}
             </span>
             <span className="font-bold text-white text-[18px] cursor-pointer pl-3">
-              ( {sessionStorage.getItem("userType")}) |
+              [ {sessionStorage.getItem("usertype")} ] |
             </span>
             <span
-              className="font-bold text-white text-[18px] cursor-pointer ml-3"
+              className="font-bold text-[18px] cursor-pointer ml-3 text-blue-500"
               onClick={handleLogout}
             >
-              Logout
+              (Logout)
             </span>
           </div>
         </div>

@@ -70,12 +70,12 @@ const AdminUsersList = () => {
               <input
                 type="radio"
                 name="userType"
-                value="Buyer"
-                checked={selectedUserType === "Buyer"}
-                onChange={() => handleUserTypeFilter("Buyer")}
+                value="Customer"
+                checked={selectedUserType === "Customer"}
+                onChange={() => handleUserTypeFilter("Customer")}
                 className="w-5 h-5 mx-3"
               />
-              <span> Buyer </span>
+              <span> Customer </span>
             </label>
             <label>
               <input

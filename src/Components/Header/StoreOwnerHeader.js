@@ -6,7 +6,7 @@ const StoreOwnerHeader = () => {
     <div
       className={`w-[100vw] h-[60px] bg-gray-800 items-center justify-center gap-3 px-2 md:px-10 
       ${
-        sessionStorage.getItem("userType") === "Store Owner" ? "flex" : "hidden"
+        sessionStorage.getItem("usertype") === "Store Owner" ? "flex" : "hidden"
       }`}
     >
       {/* <div className=" absolute top-[15px] left-[25px] ">

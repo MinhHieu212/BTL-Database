@@ -1,27 +1,100 @@
 import React, { useEffect, useState } from "react";
-import { OrderItem as Data } from "./OrderListData";
+import {
+  confirmAllAPI,
+  confirmOneAPI,
+  getAllOrderConfirmListAPI,
+  getAllOrderListAPI,
+  getAllOrderWaitingListAPI,
+} from "../../APIs/StoreAPI";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const StoreOrderList = () => {
   const [filter, setFilter] = useState("all");
-  const [OrderItem, setOrderItem] = useState(Data);
+  const [OrderItem, setOrderItem] = useState();
+  const [render, setRender] = useState(true);
 
   useEffect(() => {
     console.log("params filter order list:", filter);
-    // call funtion filter order list
-    // setOrderItem
-  }, [filter]);
 
-  const handleConfirmOrder = (id_orderItem) => {
-    // call function confirm order item
-    console.log("Confirm Order Item", id_orderItem);
+    const callAPI = async () => {
+      if (filter === "all") {
+        const res = await getAllOrderListAPI(
+          sessionStorage.getItem("id_store")
+        );
+        console.log("response from getAllOrderListAPI : ", res);
+        if (res?.status === 200) {
+          console.log("getAllOrderListAPI successfully!");
+          setOrderItem(res?.allOrders);
+        } else {
+          console.log("getAllOrderListAPI failed!");
+        }
+      } else if (filter === "waiting") {
+        const res = await getAllOrderWaitingListAPI(
+          sessionStorage.getItem("id_store")
+        );
+        console.log("response from getAllOrderListAPI : ", res);
+        if (res?.status === 200) {
+          console.log("getAllOrderListAPI successfully!");
+          setOrderItem(res?.waitingOrders);
+        } else {
+          console.log("getAllOrderListAPI failed!");
+        }
+      } else {
+        const res = await getAllOrderConfirmListAPI(
+          sessionStorage.getItem("id_store")
+        );
+        console.log("response from getAllOrderListAPI : ", res);
+        if (res?.status === 200) {
+          console.log("getAllOrderListAPI successfully!");
+          setOrderItem(res?.waitingOrders);
+        } else {
+          console.log("getAllOrderListAPI failed!");
+        }
+      }
+    };
+
+    callAPI();
+  }, [filter, render]);
+
+  const handleConfirmOrder = ({ id_order, id_product }) => {
+    const data123 = {
+      id_order: id_order,
+      id_product: id_product,
+    };
+
+    console.log(" confirm one order", data123);
+
+    const callAPI = async () => {
+      const res = await confirmOneAPI({
+        id_store: sessionStorage.getItem("id_store"),
+        data: data123,
+      });
+      if (res?.status === 200) {
+        console.log("Confirm Succesful");
+        toast.success("Confirm Succesful");
+
+        setRender(!render);
+      } else {
+        console.log("getAllOrderListAPI failed!");
+        toast.success("Confirm Faild");
+      }
+    };
+    callAPI();
   };
 
   const handleConfirmAllOrder = () => {
-    // call function confirm order item
-    console.log(
-      "Confirm All Order Item on Store id",
-      sessionStorage.getItem("id_store") || 12
-    );
+    const callAPI = async () => {
+      const res = await confirmAllAPI(sessionStorage.getItem("id_store"));
+      if (res?.status === 200) {
+        console.log("Confirm Succesful");
+        toast.success("Confirm Succesful");
+        setRender(!render);
+      } else {
+        console.log("getAllOrderListAPI failed!");
+        toast.success("Confirm Faild");
+      }
+    };
+    callAPI();
   };
 
   return (
@@ -66,9 +139,9 @@ const StoreOrderList = () => {
       </div>
 
       <div className="w-full flex flex-col shadow-xl p-3 items-center justify-start h-[80vh] overflow-x-scroll gap-5 mt-10 ">
-        {OrderItem.map((order) => (
+        {OrderItem?.map((order) => (
           <div
-            key={order.id_order}
+            key={order?.id_order}
             className="order-item flex mx-auto shadow-xl w-[80%] p-5"
           >
             <div>
@@ -76,49 +149,42 @@ const StoreOrderList = () => {
                 <span className="text-[blue] font-bold text-[20px] mr-3">
                   Product Name:{" "}
                 </span>
-                {order.name_product}
+                {order?.name}
               </p>
               <p className="text-[20px]">
                 <span className="text-[blue] font-bold text-[20px] mr-3">
-                  Order Item Id:{" "}
+                  Product Id:{" "}
                 </span>
-                {order?.id_orderItem}
+                {order?.id_product}
               </p>
               <p className="text-[20px]">
                 <span className="text-[blue] font-bold text-[20px] mr-3">
                   Quantity:{" "}
                 </span>
-                {order.quantity}
+                {order?.quantity}
               </p>
               <p className="text-[20px]">
                 <span className="text-[blue] font-bold text-[20px] mr-3">
                   Total Price:{" "}
                 </span>
-                ${order.totalPrice.toFixed(2)}
+                ${order?.totalPrice}
               </p>
               <p className="text-[20px]">
                 <span className="text-[blue] font-bold text-[20px] mr-3">
                   Status:{" "}
                 </span>
-                {order.status}
-              </p>
-              <p className="text-[20px]">
-                <span className="text-[blue] font-bold text-[20px] mr-3">
-                  Start Date:{" "}
-                </span>
-                {order.date_start}
-              </p>
-              <p className="text-[20px]">
-                <span className="text-[blue] font-bold text-[20px] mr-3">
-                  End Date:{" "}
-                </span>
-                {order.date_end}
+                {order?.status}
               </p>
             </div>
-            {order.status === "waiting" ? (
+            {order?.status === "Waiting" ? (
               <div
                 className="ml-auto w-[100px] h-[40px] cursor-pointer bg-slate-800 font-bold text-white text-center p-2 rounded-md m-2"
-                onClick={() => handleConfirmOrder(order?.id_orderItem)}
+                onClick={() =>
+                  handleConfirmOrder({
+                    id_order: order?.id_order,
+                    id_product: order?.id_product,
+                  })
+                }
               >
                 Confirm
               </div>

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductList, exampleComments } from "./ProductList";
+import {
+  getStoreSingleProductAPI,
+  modifyProductAPI,
+} from "../../APIs/StoreAPI";
+import { toast } from "../../Components/Toastify/Toastify";
+
+const image =
+  "https://images.unsplash.com/photo-1702234801211-eaff6bd8be10?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const product = {
   id: 9,
   image:
-    "https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1702234801211-eaff6bd8be10?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   name: "Tai nghe không dây",
   price: 80,
   category: "Electronics",
@@ -22,24 +30,57 @@ const ProductDetail = () => {
   const [price, setPrice] = useState(product?.price);
   const [remaining, setRemaining] = useState(product?.remaining);
   const [description, setDescription] = useState(product?.description);
+  const [comments, setComments] = useState(exampleComments);
+  const [render, setRender] = useState(true);
 
   useEffect(() => {
-    console.log("Get product with productId :", productId);
-  }, [productId]);
+    const callAPI = async () => {
+      const res = await getStoreSingleProductAPI({
+        id_store: sessionStorage.getItem("id_store"),
+        id_product: productId,
+      });
 
-  if (!product) {
-    return <p>Sản phẩm không tồn tại</p>;
-  }
+      console.log("response from getStoreSingleProductAPI : ", res.products[0]);
+
+      if (res?.status === 200) {
+        console.log("getStoreSingleProductAPI successfully!");
+
+        setName(res?.products[0]?.name);
+        setPrice(res?.products[0]?.price);
+        setRemaining(res?.products[0]?.quantity);
+        setDescription(res?.products[0]?.description);
+        setComments(res?.ratings);
+      } else {
+        console.log("getStoreSingleProductAPI failed!");
+      }
+    };
+
+    callAPI();
+  }, [productId, render]);
 
   const handleUpdateProduct = () => {
-    const editedProduct = {
+    const data = {
+      id_product: productId,
       name: name,
       price: price,
-      remaining: remaining,
+      quantity: remaining,
       description: description,
     };
 
-    console.log("Update Product with new info: ", editedProduct);
+    const callAPI = async () => {
+      const res = await modifyProductAPI(data);
+
+      if (res?.status === 200) {
+        console.log("getStoreSingleProductAPI successfully!");
+        toast.success("Modify Succesful");
+        setRender(!render);
+      } else {
+        console.log("getStoreSingleProductAPI failed!");
+        toast.error("Modify Faild");
+      }
+    };
+
+    callAPI();
   };
 
   return (
@@ -117,13 +158,17 @@ const ProductDetail = () => {
           <span> List Comments </span>
         </div>
         <div className="w-full flex items-center justify-center gap-3 flex-col">
-          {exampleComments.map((item, index) => (
-            <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
-              <p>
-                <span className="text-[blue]">Detail: </span> {item?.detail}
+          {comments.map((item, index) => (
+            <div
+              key={index}
+              className="w-[95%] text-[18px] mx-auto shadow-lg p-3"
+            >
+              <p className=" mb-3  text-center">
+                <span className="text-[blue] mr-3  ">Detail: </span>{" "}
+                {item?.detail}
               </p>
-              <p>
-                <span className="text-[blue]">Rating Star: </span>{" "}
+              <p className=" text-center">
+                <span className="text-[blue] mr-3">Rating Star: </span>{" "}
                 {item?.ratingStar} / 5
               </p>
             </div>

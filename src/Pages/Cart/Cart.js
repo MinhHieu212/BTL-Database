@@ -27,6 +27,7 @@ const Cart = () => {
       ? selectedCartItems.filter((id) => id !== productId)
       : [...selectedCartItems, productId];
 
+    // call get discount list
     setSelectedCartItems(updatedSelectedCartItem);
   };
 

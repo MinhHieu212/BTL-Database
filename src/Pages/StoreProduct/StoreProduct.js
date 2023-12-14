@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
-import { getStoreProductsAPI } from "../../APIs/StoreAPI";
+import { addProductAPI, getStoreProductsAPI } from "../../APIs/StoreAPI";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const image =
-  "https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://images.unsplash.com/photo-1702234801211-eaff6bd8be10?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const StoreProduct = () => {
   const [newProduct, setNewProduct] = useState({
@@ -12,37 +13,65 @@ const StoreProduct = () => {
     price: 0,
     description: "",
     category: "",
-    image: "",
+    imgLink: "",
     id_category: 1,
     quantity: 1,
     id_user: sessionStorage.getItem("id_user") || 1,
   });
 
   const [productList, setProductList] = useState(ProductList);
-
-  const [categories, setCategories] = useState([
-    { id_category: 1, name_category: "Electronics" },
-    { id_category: 2, name_category: "Clothing" },
-    { id_category: 3, name_category: "Books" },
-    { id_category: 4, name_category: "Toys" },
-  ]);
-
   const [renderList, setRenderList] = useState(false);
 
-  const handleAddProduct = () => {
-    if (!newProduct.name || !newProduct.price || !newProduct.category) {
-      alert("Please fill in the required fields.");
-      return;
-    }
+  const [categories, setCategories] = useState([
+    { id_category: 1001, name_category: "Electronics" },
+    { id_category: 1002, name_category: "Clothing" },
+    { id_category: 1003, name_category: "Home Decor" },
+    { id_category: 1004, name_category: "Books" },
+    { id_category: 1005, name_category: "Sports" },
+    { id_category: 1006, name_category: "Beauty" },
+    { id_category: 1007, name_category: "Automotive" },
+    { id_category: 1008, name_category: "Toys" },
+    { id_category: 1009, name_category: "Groceries" },
+    { id_category: 1010, name_category: "Health" },
+  ]);
 
-    console.log("New product infomation: (insert database)", newProduct);
+  const handleAddProduct = () => {
+    const data = {
+      name: newProduct?.name,
+      price: newProduct?.price,
+      description: newProduct?.description,
+      imgLink: newProduct?.imgLink,
+      id_category: newProduct?.id_category,
+      quantity: newProduct?.quantity,
+    };
+
+    console.log("New product infomation: (insert database)", data);
+
+    const callAPI = async () => {
+      const res = await addProductAPI({
+        id_store: sessionStorage.getItem("id_store"),
+        data: data,
+      });
+
+      console.log("response from addProductAPI : ", res);
+      if (res?.status === 200) {
+        console.log("addProductAPI successfully!");
+        toast.success("Add Product successfully!");
+        setRenderList(!renderList);
+      } else {
+        console.log("addProductAPI failed!");
+        toast.error("Add Product Faild!");
+      }
+    };
+
+    callAPI();
 
     setNewProduct({
       name: "",
       price: 0,
       description: "",
       category: "",
-      image: "",
+      imgLink: "",
       id_category: 1,
       quantity: 1,
       id_user: sessionStorage.getItem("id_user") || 1,
@@ -138,9 +167,9 @@ const StoreProduct = () => {
               className="p-2 border-2 border-black outline-none rounded-md"
               type="text"
               id="image"
-              value={newProduct.image}
+              value={newProduct.imgLink}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, image: e.target.value })
+                setNewProduct({ ...newProduct, imgLink: e.target.value })
               }
             />
 
@@ -155,14 +184,17 @@ const StoreProduct = () => {
               className="p-2 border-2 border-black outline-none rounded-md"
               value={newProduct.id_category}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, id_category: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  id_category: parseInt(e.target.value),
+                })
               }
             >
               <option value="" disabled>
                 Select a category
               </option>
               {categories.map((category, index) => (
-                <option key={index} value={category}>
+                <option key={index} value={category.id_category}>
                   {category.name_category}
                 </option>
               ))}
@@ -180,7 +212,10 @@ const StoreProduct = () => {
               id="quantity"
               value={newProduct.quantity}
               onChange={(e) =>
-                setNewProduct({ ...newProduct, quantity: e.target.value })
+                setNewProduct({
+                  ...newProduct,
+                  quantity: parseFloat(e.target.value),
+                })
               }
             />
 

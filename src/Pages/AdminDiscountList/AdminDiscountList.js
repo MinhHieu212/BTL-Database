@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { discountList } from "./DiscountListData";
+import { getDiscountListAPI } from "../../APIs/AdminAPI";
 
 const AdminDiscountList = () => {
   const [discounts, setDiscounts] = useState(discountList);
@@ -33,6 +34,16 @@ const AdminDiscountList = () => {
     });
   };
 
+  useEffect(() => {
+    const callAPI = async () => {
+      const res = await getDiscountListAPI();
+      console.log("Response from getDiscountListAPI api : ", res);
+      setDiscounts(res?.data);
+    };
+
+    callAPI();
+  }, []);
+
   return (
     <div className="w-[80vw] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
       <div className="w-[40%] shadow-xl">
@@ -53,7 +64,7 @@ const AdminDiscountList = () => {
               <input
                 type="date"
                 id="date_start"
-                value={newDiscount.date_start}
+                value={newDiscount?.date_start}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({ ...newDiscount, date_start: e.target.value })
@@ -70,7 +81,7 @@ const AdminDiscountList = () => {
               <input
                 type="date"
                 id="date_end"
-                value={newDiscount.date_end}
+                value={newDiscount?.date_end}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({ ...newDiscount, date_end: e.target.value })
@@ -86,7 +97,7 @@ const AdminDiscountList = () => {
               </label>
               <select
                 id="discountType"
-                value={newDiscount.discountType}
+                value={newDiscount?.discountType}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({
@@ -99,7 +110,7 @@ const AdminDiscountList = () => {
                 <option value="money">Money</option>
               </select>
             </div>
-            {newDiscount.discountType === "percent" && (
+            {newDiscount?.discountType === "percent" && (
               <>
                 <div className="flex items-center justify-start gap-4">
                   <label
@@ -111,7 +122,7 @@ const AdminDiscountList = () => {
                   <input
                     type="number"
                     id="discountPercent"
-                    value={newDiscount.discountPercent || ""}
+                    value={newDiscount?.discountPercent || ""}
                     className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                     onChange={(e) =>
                       setNewDiscount({
@@ -124,7 +135,7 @@ const AdminDiscountList = () => {
               </>
             )}
 
-            {newDiscount.discountType === "money" && (
+            {newDiscount?.discountType === "money" && (
               <>
                 <div className="flex items-center justify-start gap-4">
                   <label
@@ -136,7 +147,7 @@ const AdminDiscountList = () => {
                   <input
                     type="number"
                     id="discountMoney"
-                    value={newDiscount.discountMoney || ""}
+                    value={newDiscount?.discountMoney || ""}
                     className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                     onChange={(e) =>
                       setNewDiscount({
@@ -159,7 +170,7 @@ const AdminDiscountList = () => {
               <input
                 type="number"
                 id="maxDiscount"
-                value={newDiscount.maxDiscount || ""}
+                value={newDiscount?.maxDiscount || ""}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({
@@ -179,7 +190,7 @@ const AdminDiscountList = () => {
               <input
                 type="number"
                 id="minBill"
-                value={newDiscount.minBill || ""}
+                value={newDiscount?.minBill || ""}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({
@@ -200,7 +211,7 @@ const AdminDiscountList = () => {
                 type="number"
                 id="id_category"
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
-                value={newDiscount.id_category || ""}
+                value={newDiscount?.id_category || ""}
                 onChange={(e) =>
                   setNewDiscount({
                     ...newDiscount,
@@ -219,7 +230,7 @@ const AdminDiscountList = () => {
               <input
                 type="number"
                 id="quantity"
-                value={newDiscount.quantity || ""}
+                value={newDiscount?.quantity || ""}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
                   setNewDiscount({
@@ -249,63 +260,63 @@ const AdminDiscountList = () => {
         <div className="w-full h-[90vh] shadow-xl overflow-y-auto p-4 text-[18px]">
           {discounts.map((discount) => (
             <div
-              key={discount.id_discount}
+              key={discount?.id_discount}
               className="border border-gray-300 p-4 mb-4 rounded-lg"
             >
               <p className="text-lg font-bold mb-2">
-                Discount ID: {discount.id_discount}
+                Discount ID: {discount?.id_discount}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Start Date:{" "}
                 </span>
-                {discount.date_start}
+                {discount?.dateStart}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   End Date:{" "}
                 </span>
-                {discount.date_end}
+                {discount?.dateEnd}
               </p>
               <p>
-                <span className="text-[blue]  font-bold text-[18px]">
+                <span className="text-[blue]  font-bold text-[18px] mr-5">
                   Discount Percent:{" "}
                 </span>
-                {discount.discountType === "percent"
-                  ? `${discount.discountPercent}%`
+                {discount?.discountPercent
+                  ? `${discount?.discountPercent}%`
                   : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Discount Money:{" "}
                 </span>
-                {discount.discountType === "money"
-                  ? `$${discount.discountMoney}`
+                {discount?.discountMoney
+                  ? `$${discount?.discountMoney}`
                   : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Max Discount:{" "}
                 </span>
-                {discount.maxDiscount ? `$${discount.maxDiscount}` : "N/A"}
+                {discount?.maxDiscount ? `$${discount?.maxDiscount}` : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Min Bill:{" "}
                 </span>
-                {discount.minBill ? `$${discount.minBill}` : "N/A"}
+                {discount?.minBill ? `$${discount?.minBill}` : "N/A"}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Quantity:{" "}
                 </span>
-                {discount.quantity}
+                {discount?.quantity}
               </p>
               <p>
-                <span className="text-[blue] font-bold text-[18px]">
+                <span className="text-[blue] font-bold text-[18px] mr-5">
                   Category ID:{" "}
                 </span>
-                {discount.id_category}
+                {discount?.id_category}
               </p>
             </div>
           ))}

@@ -73,9 +73,9 @@ const LoginRegister = () => {
         sessionStorage.setItem("email", res?.email);
         sessionStorage.setItem("pNumber", res?.pNumber);
 
-        if (sessionStorage.getItem("name") === "Admin") {
+        if (sessionStorage.getItem("usertype") === "Admin") {
           navigate("/adminUserList");
-        } else if (sessionStorage.getItem("name") === "Store Owner") {
+        } else if (sessionStorage.getItem("usertype") === "Store Owner") {
           navigate("/storeProduct");
         } else {
           navigate("/product");

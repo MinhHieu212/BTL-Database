@@ -1,17 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { userList } from "./UserListFake";
 import { SearchIcon } from "../../Assets/icons";
+import {
+  deleteUserAPI,
+  filterUserAPI,
+  getUserListAPI,
+  searchUserAPI,
+} from "../../APIs/AdminAPI";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const AdminUsersList = () => {
   const [selectedUserType, setSelectedUserType] = useState("all");
   const [users, setUsers] = useState(userList);
   const [searchParams, setSearchParams] = useState();
+  const [renderList, setRenderList] = useState(false);
+
+  useEffect(() => {
+    const callAPI = async () => {
+      const res = await getUserListAPI();
+      console.log("Response from getUserListAPI api : ", res);
+      setUsers(res?.data);
+    };
+
+    callAPI();
+  }, [renderList]);
 
   const handleDeleteUser = (userId) => {
-    console.log("Params remvoe user: ", { id_user: userId });
+    console.log("Params remove user: ", { id_user: userId });
 
-    // Call funtion filter user List  - re-render list
-    // setUsers()
+    const callAPI = async () => {
+      const res = await deleteUserAPI(userId);
+
+      console.log("response from delete : ", res);
+      if (res?.status === 204) {
+        console.log("handleDeleteUser successfully!");
+        toast.success("Delete User success");
+        setRenderList(!renderList);
+      } else {
+        console.log("handleDeleteUser failed!");
+        toast.error("Delete User Failed");
+      }
+    };
+
+    callAPI();
   };
 
   const handleUserTypeFilter = (userType) => {
@@ -19,16 +50,53 @@ const AdminUsersList = () => {
 
     console.log("Filter User by User Type: ", userType);
 
-    // Call funtion filter user List
-    // setUsers()
+    if (userType === "All") {
+      setRenderList(!renderList);
+    } else {
+      const callAPI = async () => {
+        const res = await filterUserAPI(userType);
+
+        console.log("response from handleUserTypeFilter : ", res);
+        if (res?.status === 200) {
+          console.log("handleUserTypeFilter successfully!");
+          setUsers(res?.data);
+        } else {
+          console.log("handleUserTypeFilter failed!");
+        }
+      };
+
+      callAPI();
+    }
   };
 
   const handleSearchUser = (e) => {
     e.preventDefault();
 
+    searchUserAPI(searchParams);
+    console.log();
     console.log("Search User: ", searchParams);
-    // Call funtion filter user List
-    // setUsers()
+
+    if (searchParams === "") {
+      setRenderList(!renderList);
+    }
+
+    const callAPI = async () => {
+      const res = await searchUserAPI(searchParams);
+
+      console.log("response from searchUserAPI : ", res);
+      if (res?.status === 200) {
+        console.log("searchUserAPI successfully!");
+        setUsers(res?.data);
+      } else {
+        console.log("searchUserAPI failed!");
+      }
+    };
+
+    callAPI();
+
+    if (searchParams === "") {
+      setRenderList(!renderList);
+    }
   };
 
   return (
@@ -60,8 +128,8 @@ const AdminUsersList = () => {
                 type="radio"
                 name="userType"
                 value="all"
-                checked={selectedUserType === "all"}
-                onChange={() => handleUserTypeFilter("all")}
+                checked={selectedUserType === "All"}
+                onChange={() => handleUserTypeFilter("All")}
                 className="w-5 h-5 mx-3"
               />
               <span> All</span>
@@ -94,53 +162,53 @@ const AdminUsersList = () => {
       <div className="w-full h-[90vh] shadow-xl overflow-y-auto p-4 text-[18px]">
         {users.map((user) => (
           <div
-            key={user.id_user}
+            key={user?.id_user}
             className="border border-gray-300 p-4 mb-4 rounded-lg flex items-center"
           >
             <div>
-              <p className="text-lg font-bold mb-2">Name: {user.name}</p>
+              <p className="text-lg font-bold mb-2">Name: {user?.name}</p>
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   User Type:{" "}
                 </span>
-                {user.userType}
+                {user?.usertype}
               </p>
 
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   User Name:{" "}
                 </span>
-                {user.name}
+                {user?.name}
               </p>
 
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   Birthday:{" "}
                 </span>
-                {user.dob}
+                {user?.dob}
               </p>
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
-                  Email:{" "}
+                  Emails:{" "}
                 </span>
-                {user.email}
+                {user?.email}
               </p>
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   Phone Number:{" "}
                 </span>
-                {user.pNumber}
+                {user?.pNum}
               </p>
               <p className="mb-2">
                 <span className="text-[blue] font-bold text-[18px]">
                   Address:{" "}
                 </span>
-                {user.address}
+                {user?.address}
               </p>
             </div>
             <button
               className="bg-red-500 text-white px-4 py-2 rounded ml-auto"
-              onClick={() => handleDeleteUser(user.id_user)}
+              onClick={() => handleDeleteUser(user?.id_user)}
             >
               Delete
             </button>

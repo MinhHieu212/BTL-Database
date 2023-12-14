@@ -5,6 +5,7 @@ import {
   deleteUserAPI,
   filterUserAPI,
   getUserListAPI,
+  searchAndFilterAdminAPI,
   searchUserAPI,
 } from "../../APIs/AdminAPI";
 import { toast } from "../../Components/Toastify/Toastify";
@@ -12,7 +13,8 @@ import { toast } from "../../Components/Toastify/Toastify";
 const AdminUsersList = () => {
   const [selectedUserType, setSelectedUserType] = useState("all");
   const [users, setUsers] = useState(userList);
-  const [searchParams, setSearchParams] = useState();
+  const [searchParams, setSearchParams] = useState("");
+  const [UserType, setUserType] = useState("All");
   const [renderList, setRenderList] = useState(false);
 
   useEffect(() => {
@@ -24,6 +26,76 @@ const AdminUsersList = () => {
 
     callAPI();
   }, [renderList]);
+
+  const searchBoth = (UserType, searchParams) => {
+    const callAPI = async () => {
+      const res = await searchAndFilterAdminAPI({
+        user_type: UserType,
+        name_user: searchParams,
+      });
+
+      if (res?.status === 200) {
+        console.log("searchAndFilterAdminAPI successfully!");
+        setUsers(res?.data);
+      } else {
+        console.log("searchAndFilterAdminAPI failed!");
+      }
+    };
+
+    callAPI();
+  };
+
+  const handleUserTypeFilter = (userType) => {
+    setUserType(userType);
+
+    setSelectedUserType(userType);
+
+    if (userType === "All") {
+      setRenderList(!renderList);
+    } else {
+      const callAPI = async () => {
+        const res = await filterUserAPI(userType);
+
+        console.log("response from handleUserTypeFilter : ", res);
+        if (res?.status === 200) {
+          console.log("handleUserTypeFilter successfully!");
+          setUsers(res?.data);
+        } else {
+          console.log("handleUserTypeFilter failed!");
+        }
+      };
+
+      callAPI();
+    }
+
+    console.log("Filter User by User Type: ", userType);
+  };
+
+  const handleSearchUser = (e) => {
+    e.preventDefault();
+
+    searchUserAPI(searchParams);
+    console.log();
+    console.log("Search User: ", searchParams);
+
+    const callAPI = async () => {
+      const res = await searchUserAPI(searchParams);
+
+      console.log("response from searchUserAPI : ", res);
+      if (res?.status === 200) {
+        console.log("searchUserAPI successfully!");
+        setUsers(res?.data);
+      } else {
+        console.log("searchUserAPI failed!");
+      }
+    };
+
+    callAPI();
+
+    if (searchParams === "") {
+      searchBoth(UserType, searchParams);
+    }
+  };
 
   const handleDeleteUser = (userId) => {
     console.log("Params remove user: ", { id_user: userId });
@@ -44,61 +116,6 @@ const AdminUsersList = () => {
 
     callAPI();
   };
-
-  const handleUserTypeFilter = (userType) => {
-    setSelectedUserType(userType);
-
-    console.log("Filter User by User Type: ", userType);
-
-    if (userType === "All") {
-      setRenderList(!renderList);
-    } else {
-      const callAPI = async () => {
-        const res = await filterUserAPI(userType);
-
-        console.log("response from handleUserTypeFilter : ", res);
-        if (res?.status === 200) {
-          console.log("handleUserTypeFilter successfully!");
-          setUsers(res?.data);
-        } else {
-          console.log("handleUserTypeFilter failed!");
-        }
-      };
-
-      callAPI();
-    }
-  };
-
-  const handleSearchUser = (e) => {
-    e.preventDefault();
-
-    searchUserAPI(searchParams);
-    console.log();
-    console.log("Search User: ", searchParams);
-
-    if (searchParams === "") {
-      setRenderList(!renderList);
-    }
-
-    const callAPI = async () => {
-      const res = await searchUserAPI(searchParams);
-
-      console.log("response from searchUserAPI : ", res);
-      if (res?.status === 200) {
-        console.log("searchUserAPI successfully!");
-        setUsers(res?.data);
-      } else {
-        console.log("searchUserAPI failed!");
-      }
-    };
-
-    callAPI();
-
-    if (searchParams === "") {
-      setRenderList(!renderList);
-    }
-  };
-
   return (
     <div className="w-[80vw] mx-auto h-[95vh] mt-10">
       <h2 className="text-[24px] font-bold mb-4 px-10  text-blue-800 uppercase">

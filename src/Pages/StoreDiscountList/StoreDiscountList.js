@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { discountList } from "./DiscountListData";
 
 const StoreDiscountList = () => {
-  const [discounts, setDiscounts] = useState(discountList);
+  const [discounts] = useState(discountList);
 
   const [newDiscount, setNewDiscount] = useState({
-    date_start: "",
-    date_end: "",
+    dateStart: "",
+    dateEnd: "",
     discountPercent: null,
     maxDiscount: null,
     minBill: null,
@@ -16,12 +16,13 @@ const StoreDiscountList = () => {
     discountType: "percent",
     id_user: sessionStorage.getItem("id_user") || 1,
   });
+
   const handleAddDiscount = () => {
     console.log("Add new discount: ", newDiscount);
 
     setNewDiscount({
-      date_start: "",
-      date_end: "",
+      dateStart: "",
+      dateEnd: "",
       discountPercent: null,
       maxDiscount: null,
       minBill: null,
@@ -45,34 +46,34 @@ const StoreDiscountList = () => {
             <div className="flex items-center justify-start  gap-4">
               <label
                 className="font-bold w-[200px] text-gray-800"
-                htmlFor="date_start"
+                htmlFor="dateStart"
               >
                 Start Date:
               </label>
               <input
                 type="date"
-                id="date_start"
-                value={newDiscount.date_start}
+                id="dateStart"
+                value={newDiscount.dateStart}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
-                  setNewDiscount({ ...newDiscount, date_start: e.target.value })
+                  setNewDiscount({ ...newDiscount, dateStart: e.target.value })
                 }
               />
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
                 className="font-bold w-[200px] text-gray-800"
-                htmlFor="date_end"
+                htmlFor="dateEnd"
               >
                 End Date:
               </label>
               <input
                 type="date"
-                id="date_end"
-                value={newDiscount.date_end}
+                id="dateEnd"
+                value={newDiscount.dateEnd}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
-                  setNewDiscount({ ...newDiscount, date_end: e.target.value })
+                  setNewDiscount({ ...newDiscount, dateEnd: e.target.value })
                 }
               />
             </div>
@@ -115,7 +116,7 @@ const StoreDiscountList = () => {
                     onChange={(e) =>
                       setNewDiscount({
                         ...newDiscount,
-                        discountPercent: parseInt(e.target.value) || null,
+                        discountPercent: parseInt(e.target.value / 100) || null,
                       })
                     }
                   />
@@ -256,13 +257,13 @@ const StoreDiscountList = () => {
                 <span className="text-gray-800 font-bold text-[18px]">
                   Start Date:{" "}
                 </span>
-                {discount.date_start}
+                {discount.dateStart}
               </p>
               <p>
                 <span className="text-gray-800 font-bold text-[18px]">
                   End Date:{" "}
                 </span>
-                {discount.date_end}
+                {discount.dateEnd}
               </p>
               <p>
                 <span className="text-gray-800  font-bold text-[18px]">

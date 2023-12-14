@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { discountList } from "./DiscountListData";
-import { getDiscountListAPI } from "../../APIs/AdminAPI";
+import { addDiscountByAdminAPI, getDiscountListAPI } from "../../APIs/AdminAPI";
+import { toast } from "../../Components/Toastify/Toastify";
 
 const AdminDiscountList = () => {
   const [discounts, setDiscounts] = useState(discountList);
-
+  const [render, setRender] = useState(true);
   const [newDiscount, setNewDiscount] = useState({
-    date_start: "",
-    date_end: "",
+    dateStart: "",
+    dateEnd: "",
     discountPercent: null,
     maxDiscount: null,
     minBill: null,
@@ -15,14 +16,44 @@ const AdminDiscountList = () => {
     quantity: null,
     discountMoney: null,
     discountType: "percent",
-    id_user: sessionStorage.getItem("id_user") || 999,
+    id_user: sessionStorage.getItem("id_user") || 1,
   });
+
   const handleAddDiscount = () => {
-    console.log("Add new discount: ", newDiscount);
+    console.log(newDiscount);
+
+    const data = {
+      dateEnd: newDiscount?.dateEnd,
+      dateStart: newDiscount?.dateStart,
+      discountMoney: newDiscount?.discountMoney,
+      discountPercent: newDiscount?.discountPercent / 100,
+      discountType: newDiscount?.discountType,
+      id_category: newDiscount?.id_category,
+      id_user: newDiscount?.id_user,
+      maxDiscount: newDiscount?.maxDiscount,
+      minBill: newDiscount?.minBill,
+      quantity: newDiscount?.quantity,
+    };
+
+    setNewDiscount();
+    const callAPI = async () => {
+      const res = await addDiscountByAdminAPI(data);
+
+      console.log("response from Add Discount : ", res);
+
+      if (res?.status === 201) {
+        toast.success("Add Discount successfully");
+        setRender(!render);
+      } else {
+        toast.error("Add Discount Failed");
+      }
+    };
+
+    callAPI();
 
     setNewDiscount({
-      date_start: "",
-      date_end: "",
+      dateStart: "",
+      dateEnd: "",
       discountPercent: null,
       maxDiscount: null,
       minBill: null,
@@ -30,7 +61,7 @@ const AdminDiscountList = () => {
       quantity: null,
       discountMoney: null,
       discountType: "percent",
-      id_user: sessionStorage.getItem("id_user") || 999,
+      id_user: sessionStorage.getItem("id_user") || 1,
     });
   };
 
@@ -42,7 +73,7 @@ const AdminDiscountList = () => {
     };
 
     callAPI();
-  }, []);
+  }, [render]);
 
   return (
     <div className="w-[80vw] mx-auto h-[95vh] mt-10 flex items-start gap-5 justify-between">
@@ -57,34 +88,34 @@ const AdminDiscountList = () => {
             <div className="flex items-center justify-start  gap-4">
               <label
                 className="font-bold w-[200px] text-[blue]"
-                htmlFor="date_start"
+                htmlFor="dateStart"
               >
                 Start Date:
               </label>
               <input
                 type="date"
-                id="date_start"
-                value={newDiscount?.date_start}
+                id="dateStart"
+                value={newDiscount?.dateStart}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
-                  setNewDiscount({ ...newDiscount, date_start: e.target.value })
+                  setNewDiscount({ ...newDiscount, dateStart: e.target.value })
                 }
               />
             </div>
             <div className="flex items-center justify-start gap-4">
               <label
                 className="font-bold w-[200px] text-[blue]"
-                htmlFor="date_end"
+                htmlFor="dateEnd"
               >
                 End Date:
               </label>
               <input
                 type="date"
-                id="date_end"
-                value={newDiscount?.date_end}
+                id="dateEnd"
+                value={newDiscount?.dateEnd}
                 className="border-2 p-2 border-black outline-none w-[200px] rounded-md"
                 onChange={(e) =>
-                  setNewDiscount({ ...newDiscount, date_end: e.target.value })
+                  setNewDiscount({ ...newDiscount, dateEnd: e.target.value })
                 }
               />
             </div>

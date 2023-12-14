@@ -31,11 +31,6 @@ const StoreOwnerHeader = () => {
               <span className="text-white uppercase"> OrderList </span>
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/storeDiscountList">
-              <span className="text-white uppercase"> DiscountList </span>
-            </NavLink>
-          </li>
         </ul>
       </nav>
       {/* <div className=" absolute top-[15px] right-[25px] ">

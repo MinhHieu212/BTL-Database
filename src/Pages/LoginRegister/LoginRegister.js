@@ -66,7 +66,7 @@ const LoginRegister = () => {
 
         sessionStorage.setItem("name", res?.name || "User");
         sessionStorage.setItem("id_user", res?.id_user || 1);
-        sessionStorage.setItem("id_store", res?.id_store || 1);
+        sessionStorage.setItem("id_store", res?.store[0]?.id_store || 1);
         sessionStorage.setItem("usertype", res?.usertype);
         sessionStorage.setItem("address", res?.address);
         sessionStorage.setItem("dob", res?.dob);

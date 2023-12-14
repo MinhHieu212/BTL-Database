@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductList } from "./ProductList";
 import { Link } from "react-router-dom";
+import { getStoreProductsAPI } from "../../APIs/StoreAPI";
+
+const image =
+  "https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const StoreProduct = () => {
   const [newProduct, setNewProduct] = useState({
@@ -13,12 +17,17 @@ const StoreProduct = () => {
     quantity: 1,
     id_user: sessionStorage.getItem("id_user") || 1,
   });
+
+  const [productList, setProductList] = useState(ProductList);
+
   const [categories, setCategories] = useState([
     { id_category: 1, name_category: "Electronics" },
     { id_category: 2, name_category: "Clothing" },
     { id_category: 3, name_category: "Books" },
     { id_category: 4, name_category: "Toys" },
   ]);
+
+  const [renderList, setRenderList] = useState(false);
 
   const handleAddProduct = () => {
     if (!newProduct.name || !newProduct.price || !newProduct.category) {
@@ -39,15 +48,27 @@ const StoreProduct = () => {
       id_user: sessionStorage.getItem("id_user") || 1,
     });
   };
+
+  useEffect(() => {
+    const callAPI = async () => {
+      const data = sessionStorage.getItem("id_store");
+      const res = await getStoreProductsAPI(data);
+      console.log("Response from getUserListAPI api : ", res);
+      setProductList(res?.products);
+    };
+
+    callAPI();
+  }, [renderList]);
+
   return (
     <div className="w-[80vw] flex item-start mx-auto h-[95vh] mt-5">
       <div className="w-[70%] flex items-start justify-center mt-3 p-3 h-[94vh] overflow-y-scroll shadow-lg h-50">
         <div className="flex flex-wrap justify-start gap-y-5">
-          {ProductList.map((item, index) => (
+          {productList.map((item, index) => (
             <div key={index} className="w-[33%] p-3 cursor-pointer shadow-lg">
-              <Link to={`/storeProduct/${item?.id}`}>
+              <Link to={`/storeProduct/${item?.id_product}`}>
                 <img
-                  src={item?.image}
+                  src={image}
                   alt={item?.name}
                   className="w-full h-auto rounded-lg"
                 />
@@ -55,8 +76,10 @@ const StoreProduct = () => {
                   <p className="font-bold">{item?.name}</p>
                   <p className="text-gray-600">Price: {item?.price} $</p>
                   <div className="flex item-center justify-between">
-                    <p className="text-gray-500">Stock: {item?.stock}</p>
-                    <p className="text-blue-500">Rating: {item?.rating} / 5</p>
+                    <p className="text-gray-500">Stock: {item?.soldNumber}</p>
+                    <p className="text-blue-500">
+                      Rating: {item?.productRating} / 5
+                    </p>
                   </div>
                 </div>
               </Link>

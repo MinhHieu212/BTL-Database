@@ -49,7 +49,16 @@ const Cart = () => {
   const handleSelectAllChange = () => {
     setSelectAll(!selectAll);
     setSelectedCartItems(
-      selectAll ? [] : cartItemList.map((product) => product.id_cart)
+      selectAll ? [] : cartItemList.map((product) => product.id_product)
+    );
+
+    // call get discount list
+
+    // setDiscountList;
+
+    console.log(
+      "List cart item id:",
+      selectAll ? [] : cartItemList.map((product) => product.id_product)
     );
   };
 

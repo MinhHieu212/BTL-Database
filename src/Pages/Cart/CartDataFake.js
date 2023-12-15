@@ -102,15 +102,15 @@ export const discounts = [
 
 export const paymentMethodList = [
   {
-    id_payment: 1,
-    name_payment: "Cerdit cart",
+    id_payment: 2001,
+    name_payment: "Credit Card",
   },
   {
-    id_payment: 2,
-    name_payment: "Momo",
+    id_payment: 2002,
+    name_payment: "Bank Transfer",
   },
   {
-    id_payment: 3,
-    name_payment: "Paya",
+    id_payment: 2003,
+    name_payment: "PayPal",
   },
 ];

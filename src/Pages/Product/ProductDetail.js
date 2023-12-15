@@ -1,52 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ProductList, exampleComments } from "./ProductList";
+import { exampleComments } from "./ProductList";
 import { toast } from "../../Components/Toastify/Toastify";
+import { getDetailProductAPI } from "../../APIs/CustomerAPI";
+import { addToCartAPI } from "../../APIs/StoreAPI";
+
+const image =
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [comments, setComments] = useState(exampleComments);
-
-  const product = ProductList.find((item) => item.id === parseInt(productId));
-
-  const [ProductDetail, setProductDetail] = useState(product);
+  const [ProductDetail, setProductDetail] = useState([]);
 
   useEffect(() => {
-    // call function get product details (product Id)
+    const callAPI = async () => {
+      const res = await getDetailProductAPI(productId);
+      setComments(res?.ProductRating);
+      setProductDetail(res?.ProductDetail[0]);
+    };
+    callAPI();
 
-    // setProductDetail;
-
-    // call function get list commnet (product Id)
-
-    // setComments;
     console.log("Get product with productId :", productId);
   }, [productId]);
 
   const handleAddToCart = () => {
-    // call function create cart (id_product , id_user, quantity)
+    const data = {
+      id_user: sessionStorage.getItem("id_user"),
+      id_product: productId,
+      quantity: quantity,
+      totalPrice: quantity * ProductDetail?.price,
+    };
 
-    console.log(
-      `Added ${quantity} ${ProductDetail?.name} to cart and total price: $ ${
-        quantity * ProductDetail?.price
-      } `
-    );
+    const callAPI = async () => {
+      const res = await addToCartAPI(data);
+      console.log(res);
 
-    toast.success("Add product to cart successfully");
+      if (res?.status === "200") {
+        toast.success("Add product to cart successfully");
+      } else {
+        toast.error("Product already on cart");
+      }
+    };
+
+    callAPI();
   };
-
-  if (!ProductDetail) {
-    return <p>Sản phẩm không tồn tại</p>;
-  }
 
   return (
     <div className="w-[80vw] mx-auto h-[95vh] ">
       <div className="w-full mx-auto flex items-start mt-5 justify-center">
         <div className="w-1/2  flex items-start justify-center rounded-lg overflow-hidden h-[600px] px-7 py-5 shadow-xl">
           <img
-            src={ProductDetail?.image}
+            src={ProductDetail?.image || image}
             alt={ProductDetail?.name}
-            className="w-full h-full object-cover object-center rounded-lg shadow-lg"
+            className="w-full h-full object-center rounded-lg shadow-lg"
           />
         </div>
         <div className="w-1/2 flex flex-col items-start justify-start px-7 py-5 gap-4 text-[18px] h-[600px] shadow-xl">
@@ -59,7 +67,7 @@ const ProductDetail = () => {
           </p>
           <p>
             <span className="text font-bold pr-3">Stock: </span>{" "}
-            {ProductDetail?.stock}
+            {ProductDetail?.soldNumber}
           </p>
           <p>
             <span className="text font-bold pr-3">Remaining: </span>
@@ -67,17 +75,14 @@ const ProductDetail = () => {
           </p>
           <p>
             <span className="text font-bold pr-3">Rating: </span>{" "}
-            {ProductDetail?.rating} / 5
+            {ProductDetail?.productRating} / 5
           </p>
 
           <p>
             <span className="text font-bold pr-3">Mô tả sản phẩm: </span>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
-            est iure non libero repudiandae dolores officiis culpa facere hic
-            accusantium dolor totam ex, dolorem nulla doloribus minima aperiam
-            molestiae vitae!
+            {ProductDetail?.description}
           </p>
-          <div className="flex items-center gap-x-4 justify-center">
+          <div className="flex mt-auto items-center gap-x-4 justify-center">
             <div>
               <label htmlFor="quantity" className="text font-bold">
                 Quantity:
@@ -109,12 +114,18 @@ const ProductDetail = () => {
         </div>
         <div className="w-full flex items-center justify-center gap-3 flex-col">
           {comments.map((item, index) => (
-            <div key={index} className="w-[95%] mx-auto shadow-lg p-3">
-              <p>
-                <span className="text-[blue]">Detail: </span> {item?.detail}
+            <div
+              key={index}
+              className="w-[95%] text-[18px] mx-auto shadow-lg p-3"
+            >
+              <p className=" mb-3  text-center">
+                <span className="text-[blue] mr-3 font-bold ">Detail: </span>{" "}
+                {item?.detail}
               </p>
-              <p>
-                <span className="text-[blue]">Rating Star: </span>{" "}
+              <p className=" text-center">
+                <span className="text-[blue] mr-3 font-bold">
+                  Rating Star:{" "}
+                </span>{" "}
                 {item?.ratingStar} / 5
               </p>
             </div>

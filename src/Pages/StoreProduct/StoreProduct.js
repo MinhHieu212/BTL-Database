@@ -97,7 +97,7 @@ const StoreProduct = () => {
             <div key={index} className="w-[33%] p-3 cursor-pointer shadow-lg">
               <Link to={`/storeProduct/${item?.id_product}`}>
                 <img
-                  src={image}
+                  src={item?.image || image}
                   alt={item?.name}
                   className="w-full h-auto rounded-lg"
                 />

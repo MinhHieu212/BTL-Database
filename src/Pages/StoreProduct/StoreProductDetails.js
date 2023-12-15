@@ -88,7 +88,7 @@ const ProductDetail = () => {
       <div className="w-full mx-auto flex items-start mt-5 justify-center">
         <div className="w-1/2  flex items-start justify-center rounded-lg overflow-hidden h-[600px] px-7 py-5 shadow-xl">
           <img
-            src={product?.image}
+            src={product?.image || image}
             alt={product?.name}
             className="w-full h-full object-cover object-center rounded-lg shadow-lg"
           />
@@ -164,11 +164,13 @@ const ProductDetail = () => {
               className="w-[95%] text-[18px] mx-auto shadow-lg p-3"
             >
               <p className=" mb-3  text-center">
-                <span className="text-[blue] mr-3  ">Detail: </span>{" "}
+                <span className="text-[blue] mr-3   font-bold">Detail: </span>{" "}
                 {item?.detail}
               </p>
               <p className=" text-center">
-                <span className="text-[blue] mr-3">Rating Star: </span>{" "}
+                <span className="text-[blue] mr-3 font-bold">
+                  Rating Star:{" "}
+                </span>{" "}
                 {item?.ratingStar} / 5
               </p>
             </div>

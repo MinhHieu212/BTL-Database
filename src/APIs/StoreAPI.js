@@ -176,3 +176,35 @@ export const confirmOneAPI = async ({ id_store, data = {} }) => {
     return error;
   }
 };
+
+export const addToCartAPI = async (data = {}) => {
+  try {
+    const response = await BaseAPI.post(`/cart/add`, data);
+
+    if (response && response.data) {
+      console.log("addToCartAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("addToCartAPI Failed. Response:", error);
+    return error;
+  }
+};
+
+export const getCardListAPI = async (id_user) => {
+  try {
+    const response = await BaseAPI.get(`/cart/${id_user}`);
+
+    if (response && response.data) {
+      console.log("getCardListAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("getCardListAPI Failed. Response:", error);
+    return error;
+  }
+};

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { discounts, paymentMethodList, productList } from "./CartDataFake";
+import { getCardListAPI } from "../../APIs/StoreAPI";
+
+const image =
+  "https://lifeisbeyeeutiful.com/wp-content/uploads/2018/10/LAZADA.png";
 
 const Cart = () => {
   const [selectedCartItems, setSelectedCartItems] = useState([]);
@@ -14,10 +18,16 @@ const Cart = () => {
     useState(paymentMethodList);
 
   useEffect(() => {
-    // call function get cart list (id_user)
-    // setCartItemList;
     // call function get payment method list
     // setPaymentMethosdList;
+    const callAPI = async () => {
+      const res = await getCardListAPI(sessionStorage.getItem("id_user"));
+
+      console.log("reponse form get getCardListAPI", res);
+
+      setCartItemList(res);
+    };
+    callAPI();
   }, []);
 
   // HADNDLE SELECT PRODUCT ITEM
@@ -27,7 +37,12 @@ const Cart = () => {
       ? selectedCartItems.filter((id) => id !== productId)
       : [...selectedCartItems, productId];
 
+    console.log("List cart item id:", updatedSelectedCartItem);
+
     // call get discount list
+
+    // setDiscountList;
+
     setSelectedCartItems(updatedSelectedCartItem);
   };
 
@@ -86,24 +101,23 @@ const Cart = () => {
                 <div className="w-full flex item-center justify-start gap-2 text-[18px]">
                   <input
                     type="checkbox"
-                    id={`product-${product.id_cart}`}
-                    checked={selectedCartItems.includes(product.id_cart)}
-                    onChange={() => handleCheckboxChange(product.id_cart)}
+                    id={`product-${product.id_product}`}
+                    checked={selectedCartItems.includes(product.id_product)}
+                    onChange={() => handleCheckboxChange(product.id_product)}
                     className="mr-2 h-5 w-5 mt-1"
                   />
                   <label
-                    htmlFor={`product-${product.id_cart}`}
+                    htmlFor={`product-${product.id_product}`}
                     className="flex-1 font-bold inline-block"
                   >
-                    {product.name} - ${product.price}
+                    {product.product_name} - ${product.product_price}
                   </label>
                 </div>
                 <div className="w-full flex items-center justify-between text-[18px]">
                   <div className="w-p[75%]">
                     <p>
                       <span className="font-bold">Description: </span>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Fugiat necessitatibus et error illo quisquam.
+                      {product?.product_description || 0}
                     </p>
                     <p className="mt-3">
                       <span className="font-bold">Quantity: </span>
@@ -112,7 +126,7 @@ const Cart = () => {
                   </div>
                   <div className="w-[25%] h-[200px] shrink-0 overflow-hidden">
                     <img
-                      src={product.image}
+                      src={product.image || image}
                       alt=""
                       className="w-full h-full rounded-md  object-center"
                     />

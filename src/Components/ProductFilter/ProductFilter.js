@@ -3,64 +3,85 @@ import { SearchIcon } from "../../Assets/icons";
 
 const CategoriesList = [
   {
-    id_category: 1,
+    id_category: 1001,
+    name_category: "Electronics",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Thời trang",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 2,
+    id_category: 1002,
+    name_category: "Clothing",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Điện tử",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 3,
+    id_category: 1003,
+    name_category: "Home Decor",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Đồ chơi",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 4,
+    id_category: 1004,
+    name_category: "Books",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Sách",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 5,
+    id_category: 1005,
+    name_category: "Sports",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Gia dụng",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 6,
+    id_category: 1006,
+    name_category: "Beauty",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Sức khỏe",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
   {
-    id_category: 7,
+    id_category: 1007,
+    name_category: "Automotive",
     image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    name: "Thực phẩm",
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
+  },
+  {
+    id_category: 1008,
+    name_category: "Toys",
+    image:
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
+  },
+  {
+    id_category: 1009,
+    name_category: "Groceries",
+    image:
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
+  },
+  {
+    id_category: 1010,
+    name_category: "Health",
+    image:
+      "https://i.pinimg.com/736x/f7/71/1a/f7711ad07aeae437ced4c4269635cc4b--mua-s%E1%BA%AFm-google-play.jpg",
   },
 ];
 
-const ProductFilter = () => {
-  const [productName, setProductName] = useState(null);
-  const [startPrice, setStartPrice] = useState(null);
-  const [endPrice, setEndPrice] = useState(null);
-  const [hotSale, setHotSale] = useState(null);
-  const [id_category, setId_Catogory] = useState(null);
+const ProductFilter = ({ handleSetParam = () => {} }) => {
+  const [productName, setProductName] = useState("null");
+  const [startPrice, setStartPrice] = useState("null");
+  const [endPrice, setEndPrice] = useState("null");
+  const [hotSale, setHotSale] = useState("null");
+  const [id_category, setId_Catogory] = useState("null");
 
   const handleFilterChange = () => {
     const params = {
-      hotSale: hotSale,
-      startPrice: Number(startPrice),
-      endPrice: Number(endPrice),
-      category: id_category,
-      searchField: productName,
+      topProduct: hotSale,
+      minPrice: startPrice === "" ? "null" : Number(startPrice),
+      maxPrice: endPrice === "" ? "null" : Number(endPrice),
+      id_catgory: id_category,
+      searchField: productName === "" ? "null" : productName,
     };
+
+    handleSetParam(params);
+
     console.log("Filter Params: ", params);
   };
 
@@ -69,20 +90,22 @@ const ProductFilter = () => {
     console.log("Search product: ", productName);
   };
 
-  const handleClick = (name, id) => {
-    console.log("Params display by Catelgory: ", {
-      name_category: name,
-      id_category: id,
-    });
-    setId_Catogory(id);
-  };
-
   const hanbleShowAllProducts = () => {
-    setProductName(null);
-    setStartPrice(null);
-    setEndPrice(null);
-    setHotSale(null);
-    setId_Catogory(null);
+    setProductName("null");
+    setStartPrice("null");
+    setEndPrice("null");
+    setHotSale("null");
+    setId_Catogory("null");
+
+    const params = {
+      searchField: "null",
+      id_catgory: "null",
+      minPrice: "null",
+      maxPrice: "null",
+      topProduct: "null",
+    };
+
+    handleSetParam(params);
   };
 
   return (
@@ -103,21 +126,21 @@ const ProductFilter = () => {
               key={index}
               className={`flex flex-col items-center cursor-pointer shrink-0 justify-center`}
               onClick={() => {
-                handleClick(category?.name, category?.id_category);
+                setId_Catogory(category?.id_category);
               }}
             >
               <div
-                className={`bg-white  shrink-0 rounded-lg shadow-md p-4 ${
-                  id_category === category?.id_category ? "bg-gray-300" : ""
+                className={`bg-white  shrink-0 rounded-lg shadow-lg p-4 ${
+                  id_category === category?.id_category ? "bg-blue-200" : ""
                 }`}
               >
                 <img
                   src={category.image}
-                  alt={category.name}
-                  className="h-[70px] w-[70px] object-cover mb-4 rounded-full"
+                  alt={category?.name}
+                  className="h-[70px] w-[70px] block mx-auto object-cover mb-4 rounded-full"
                 />
-                <p className="text-lg text-center font-bold mb-2">
-                  {category.name}
+                <p className="text-lg text-center font-bold mb-2 w-[110px]">
+                  {category?.name_category}
                 </p>
               </div>
             </div>
@@ -182,7 +205,7 @@ const ProductFilter = () => {
 
         {/* Nút áp dụng bộ lọc */}
         <div className="w-full mt-3 flex item-center justify-between">
-          <div className="flex item-center mt-2 justify-start ">
+          {/* <div className="flex item-center mt-2 justify-start ">
             <input
               type="radio"
               className="w-5 h-5 mr-3"
@@ -199,16 +222,16 @@ const ProductFilter = () => {
             >
               Danh mục bán chạy nhất
             </label>
-          </div>
+          </div> */}
           <div className=" flex item-center mt-2 justify-start ">
             <input
-              type="radio"
+              type="checkbox"
               className="w-5 h-5 mr-3"
               value="hotProduct"
               id="hotProduct"
               name="hotSale"
               onChange={() => {
-                setHotSale("hotProduct");
+                setHotSale("BestRating");
               }}
             />
             <label

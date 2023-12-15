@@ -1,30 +1,75 @@
 import React, { useEffect, useState } from "react";
 import { OrderData, HistoryData } from "./OrdersDataFake";
 import EditCommentModal from "../../Components/Modal/EditCommentModal";
+import {getBillDataFromAPI, getOrderDataFromAPI, getPurchasedProductDataFromAPI, delComment} from "../../APIs/CustomerAPI";
 
 const Orders = () => {
   const [selectedStatus, setSelectedStatus] = useState("order");
   const [data, setData] = useState(OrderData);
   const [dataHistory, setDataHistory] = useState(HistoryData);
 
-  const handleDeleteComment = (id_order, id_product) => {
+  useEffect(() => {
+    const callAPI = async () => {
+      const res = await getPurchasedProductDataFromAPI(sessionStorage.getItem("id_user"));
+      console.log("Respond from API: ", res);
+      setDataHistory(res);
+    }
+    callAPI()
+  }, []);
+
+  const handleDeleteComment = (id_product) => {
     const params = {
-      id_order: id_order,
       id_product: id_product,
       id_user: sessionStorage.getItem("id_user"),
     };
     console.log("Delete product comment : ", params);
+    const callAPI = async () => {
+      const res = await delComment(params);
+    }
+    callAPI();
   };
 
   useEffect(() => {
     // Call function filter Orders/Bill/Paided List
-
+    if (selectedStatus == "order") {
+      const callAPI = async () => {
+        const res = await getOrderDataFromAPI(sessionStorage.getItem("id_user"));
+        console.log("Respond from API: ", res);
+        res.forEach(element => {
+          if (element.id_pMethod == 2001)
+            element.id_pName = "Credit Card";
+          else if (element.id_pMethod == 2002)
+            element.id_pName = "PayPal";
+          else if (element.id_pMethod == 2003)
+            element.id_pName = "Bank Transfer";
+        });
+        setData(res);
+      };
+      callAPI();
+    }
+    else if (selectedStatus == "bill") {
+      const callAPI = async () => {
+        const res = await getBillDataFromAPI(sessionStorage.getItem("id_user"));
+        console.log("Respond from API: ", res);
+        res.forEach(element => {
+          if (element.id_pMethod == 2001)
+            element.id_pName = "Credit Card";
+          else if (element.id_pMethod == 2002)
+            element.id_pName = "PayPal";
+          else if (element.id_pMethod == 2003)
+            element.id_pName = "Bank Transfer";
+        });
+        setData(res);
+      };
+      callAPI();
+    }
     console.log(
       "Call function filter list Order with option: ",
       selectedStatus
     );
-
     // setData;
+
+
   }, [selectedStatus]);
 
   return (
@@ -33,7 +78,7 @@ const Orders = () => {
         <div className="w-[48%] ">
           <div className="w-full flex item-center justify-between">
             <h2 className="text-[24px] font-bold mb-4 px-10">Orders / Bills</h2>
-            <h2 className="text-[24px] font-bold mb-4 px-10">Total: </h2>
+            <h2 className="text-[24px] font-bold mb-4 px-10">Total:</h2>
           </div>
           <div className="flex gap-10 w-full font-bold items-center justify-center mb-4">
             <label className="text-[18px]">
@@ -67,7 +112,7 @@ const Orders = () => {
                 className="border border-gray-300 p-4 mb-4 rounded-lg flex "
               >
                 <div>
-                  <p className="text-lg font-bold mb-2">Time: {bill.time}</p>
+                  <p className="text-lg font-bold mb-2">Time: {bill?.time}</p>
                   <p className="mb-2">
                     <span className=" font-bold text-[18px]">Order Id: </span>
                     {bill.id_order}
@@ -90,25 +135,25 @@ const Orders = () => {
                     <span className=" font-bold text-[18px]">
                       Phone Number:{" "}
                     </span>
-                    {bill.phoneNumber}
+                    {bill.pNumber}
                   </p>
                   <p className="mb-2">
                     <span className=" font-bold text-[18px]">
                       Number of Items:{" "}
                     </span>
-                    {bill.noItem}
+                    {bill.itemCnt}
                   </p>
                   <p className="mb-2">
                     <span className=" font-bold text-[18px]">
                       Discount Name:{" "}
                     </span>
-                    {bill?.discount_name}
+                    {bill?.id_discount}
                   </p>
                   <p className="mb-2">
                     <span className=" font-bold text-[18px]">
                       Payment Method:{" "}
                     </span>
-                    {bill?.pm_name}
+                    {bill?.id_pName}
                   </p>
                 </div>
               </div>
@@ -124,44 +169,44 @@ const Orders = () => {
           </div>
 
           <div className="w-full h-[90vh] shadow-xl overflow-y-auto p-4 text-[18px] mt-10">
-            {dataHistory.map((bill) => (
+            {dataHistory.map((prod) => (
               <div
-                key={bill.id_order}
+                key={prod.id_order}
                 className="border border-gray-300 p-4 mb-4 w-full rounded-lg flex flex-col items-center justify-center gap-3 "
               >
                 <div className="w-full flex items-center justify-between">
                   <div className="w-[50%] p-5 flex flex-col items-start justify-center">
-                    <p className="text-lg font-bold mb-2">Time: {bill.time}</p>
+                    <p className="text-lg font-bold mb-2">Time: {prod.time}</p>
                     <p className="mb-2">
                       <span className=" font-bold text-[18px]">
                         Product ID:{" "}
                       </span>
-                      {bill.id_product}
+                      {prod.id_product}
                     </p>
                     <p className="mb-2">
                       <span className=" font-bold text-[18px]">
                         Product Name:{" "}
                       </span>
-                      {bill.product_name}
+                      {prod.productName}
                     </p>
                     <p className="mb-2">
                       <span className=" font-bold text-[18px]">Order Id: </span>
-                      {bill.id_order}
+                      {prod.id_order}
                     </p>
                     <p className="mb-2">
                       <span className=" font-bold text-[18px]">
                         Total Price:{" "}
                       </span>
-                      ${bill.totalPrice.toFixed(2)}
+                      ${prod.totalPrice.toFixed(2)}
                     </p>
                     <p className="mb-2">
                       <span className=" font-bold text-[18px]">Quantity: </span>
-                      {bill.quantity}
+                      {prod.quantity}
                     </p>
                   </div>
                   <div className="w-[50%] p-5">
                     <img
-                      src={bill.product_img}
+                      src={prod?.product_img}
                       alt=""
                       className="w-full h-full rounded-md object-cover"
                     />
@@ -170,24 +215,24 @@ const Orders = () => {
 
                 <div className="flex w-full items-center justify-start p-3">
                   <EditCommentModal
-                    action={bill?.ratingYet === "no" ? "Add" : "Edit"}
-                    id_product={bill?.id_product}
-                    id_order={bill.id_order}
+                    action={prod?.rated === "No" ? "Add" : "Edit"}
+                    id_product={prod?.id_product}
+                    id_order={prod.id_order}
                   >
                     <button className="py-2 px-3 bg-gray-800 mb-2 text-white font-bold rounded-md">
-                      {bill?.ratingYet === "no"
+                      {prod?.rated === "No"
                         ? "Add comment"
                         : "Edit comment"}
                     </button>
                   </EditCommentModal>
 
-                  {bill?.ratingYet === "no" ? (
+                  {prod?.rated === "No" ? (
                     ""
                   ) : (
                     <button
                       className="py-2 px-3 ml-3 bg-red-500 mb-2 text-white font-bold rounded-md"
                       onClick={() =>
-                        handleDeleteComment(bill.id_order, bill?.id_product)
+                        handleDeleteComment(prod.id_order, prod?.id_product)
                       }
                     >
                       Delete comment

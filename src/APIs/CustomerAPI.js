@@ -34,62 +34,105 @@ export const registerAPI = async (data = {}) => {
   }
 };
 
-export const getAllProductAPI = async () => {
-  const path2 = "/products";
+export const getOrderDataFromAPI = async (id_user) => {
+  // const path = "/orders/${id_user}"; 
   try {
-    const response = await BaseAPI.get(path2);
+    const response = await BaseAPI.get(`/orders/${id_user}`);
 
-    if (response) {
-      console.log("registerAPI successful. Response:", response.data.data);
-      return response.data.data;
-    } else {
-      // throw new Error("Invalid response received from the server.");
-    }
-  } catch (error) {
-    // console.log("registerAPI Failed. Response:", error);
-    return error;
-  }
-};
-
-export const getDetailProductAPI = async (id_product) => {
-  const path2 = `/products/detail/${id_product}`;
-  try {
-    const response = await BaseAPI.get(path2);
-
-    if (response) {
-      // console.log(
-      //   "getDetailProductAPI successful. Response:",
-      //   response.data.data
-      // );
-      return response.data.data;
-    } else {
-      // throw new Error("Invalid response received from the server.");
-    }
-  } catch (error) {
-    // console.log("getDetailProductAPI Failed. Response:", error);
-    return error;
-  }
-};
-
-export const filterProductAPI = async ({
-  searchField = null,
-  id_catgory = null,
-  minPrice = null,
-  maxPrice = null,
-  topProduct = null,
-}) => {
-  const path2 = `/products/search/${searchField}/${id_catgory}/${minPrice}/${maxPrice}/${topProduct}`;
-  try {
-    const response = await BaseAPI.get(path2);
-
-    if (response) {
-      console.log("filterProductAPI successful. Response:", response.data);
+    if (response && response.data) {
+      console.log("getOrderDataFromAPI successful. Response:", response.data);
       return response.data;
     } else {
       // throw new Error("Invalid response received from the server.");
     }
   } catch (error) {
-    console.log("filterProductAPI Failed. Response:", error);
+    console.log("getOrderDataFromAPI Failed. Response:", error);
+    return error;
+  }
+}
+
+export const getBillDataFromAPI = async (id_user) => {
+  // const path = "/orders/${id_user}"; 
+  try {
+    const response = await BaseAPI.get(`/orders/bills/${id_user}`);
+
+    if (response && response.data) {
+      console.log("getOrderDataFromAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("getOrderDataFromAPI Failed. Response:", error);
+    return error;
+  }
+}
+
+export const getPurchasedProductDataFromAPI = async (id_user) => {
+  // const path = "/orders/${id_user}"; 
+  try {
+    const response = await BaseAPI.get(`/orders/prodPurchased/${id_user}`);
+
+    if (response && response.data) {
+      console.log("getPurchasedFromAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("getOrderDataFromAPI Failed. Response:", error);
+    return error;
+  }
+}
+
+export const addComment = async (data) => {
+  const path = "/orders/addComment";
+  try {
+    const response = await BaseAPI.post(path, data);
+
+    if (response && response.data) {
+      console.log("addDiscountByAdminAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("addDiscountByAdminAPI Failed. Response:", error);
     return error;
   }
 };
+
+export const updComment = async (data) => {
+  const path = "/orders/editComment";
+  try {
+    const response = await BaseAPI.patch(path, data);
+
+    if (response && response.data) {
+      console.log("addDiscountByAdminAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("addDiscountByAdminAPI Failed. Response:", error);
+    return error;
+  }
+};
+
+export const delComment = async (data) => {
+  const path = "/orders/deleteComment";
+  try {
+    const response = await BaseAPI.delete(path, data);
+
+    if (response && response.data) {
+      console.log("addDiscountByAdminAPI successful. Response:", response.data);
+      return response.data;
+    } else {
+      // throw new Error("Invalid response received from the server.");
+    }
+  } catch (error) {
+    console.log("addDiscountByAdminAPI Failed. Response:", error);
+    return error;
+  }
+};
+
